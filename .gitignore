@@ -1,0 +1,12 @@
+.idea
+
+node_modules
+.svelte-kit
+build
+*.log
+.env
+.env.*
+!.env.example
+
+# runtime data (database + files edited through the admin)
+data

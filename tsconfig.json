@@ -1,0 +1,9 @@
+{
+  "extends": "$app/tsconfig",
+  "compilerOptions": {
+    "types": ["node", "$app/types"],
+    "paths": { "#lib/*": ["./src/lib/*"] }
+  },
+  "include": ["src", "*.ts"],
+  "exclude": ["src/service-worker"]
+}

@@ -1,0 +1,29 @@
+$bg: #fffdf8;
+$header-bg: #f8f0e0;
+$footer-bg: #37342d;
+$text: #333;
+$dark: #212120;
+$accent: #bc9d77;
+$notice: #4f3933;
+$bubble: #776a59;
+$sys: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif;
+$accent-dark: #ba9a72;
+$light-btn: #f0e8dd;
+$border-soft: #f0e8dd;
+
+$font-main: 'Raleway', sans-serif;
+$font-alt: 'Roboto', sans-serif;
+
+$tablet: 860px;
+$mobile: 701px;
+
+@mixin tablet {
+  @media (max-width: #{$tablet}) {
+    @content;
+  }
+}
+@mixin mobile {
+  @media (max-width: #{$mobile}) {
+    @content;
+  }
+}

@@ -1,0 +1,1367 @@
+@use 'vars' as *;
+
+// ---- Home slider ---------------------------------------------------------
+// Layout from the original Smart Slider, but the content always stays between the arrows:
+//  901-1199px: two halves between the arrow zones
+//  >=1200px:   text x=210 w=.5vw-260, image x=.5vw+10 w=(.43vw-23)*k
+//  <=900px:    stacked, centred
+$slide-stack: 900px;
+$arrow-zone: 85px;
+
+@mixin slide-stack {
+  @media (max-width: #{$slide-stack}) {
+    @content;
+  }
+}
+
+.slider {
+  position: relative;
+  overflow: hidden;
+  background: $header-bg;
+  touch-action: pan-y;
+  user-select: none;
+}
+
+.slider-track {
+  display: flex;
+  transition: transform 0.6s ease;
+}
+
+.slide {
+  flex: 0 0 100%;
+  position: relative;
+  display: flex;
+  align-items: center;
+  padding: 67px $arrow-zone 100px $arrow-zone;
+  min-width: 0;
+
+  .slide-text {
+    flex: 0 0 auto;
+    width: calc((100vw - 2 * #{$arrow-zone}) * 0.5 - 10px);
+    font-family: $font-main;
+    color: #2f1e1e;
+  }
+  h2 {
+    font-weight: 700;
+    font-size: var(--tfs, max(23px, 1.29vw));
+    line-height: var(--tlh, 1);
+    text-transform: uppercase;
+    color: #2f1e1e;
+  }
+  h3 {
+    font-weight: 500;
+    font-size: 24px;
+    line-height: var(--ah);
+    margin: 0 0 var(--ag);
+  }
+  .slide-desc {
+    font-size: 18px;
+    line-height: 27px;
+    text-align: justify;
+    hyphens: manual;
+
+    p {
+      margin: 0;
+    }
+  }
+  .slide-btn {
+    display: inline-block;
+    margin-top: 25px;
+    background: $accent;
+    color: #fff;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 21px;
+    padding: 10px 40px;
+    border-radius: 3px;
+  }
+  .slide-img {
+    position: absolute;
+    left: calc(#{$arrow-zone} + (100vw - 2 * #{$arrow-zone}) * 0.5 - 10px + 20px);
+    top: calc(50% - 16px);
+    transform: translateY(-50%);
+    width: calc((100vw - 2 * #{$arrow-zone}) * 0.5 * var(--k) - 10px * var(--k));
+    display: block;
+
+    img {
+      display: block;
+      width: 100%;
+    }
+  }
+
+  @media (min-width: 1200px) {
+    padding: 55px $arrow-zone 100px 210px;
+    min-height: 31.25vw;
+
+    .slide-text {
+      width: calc(50vw - 260px);
+    }
+    .slide-img {
+      left: calc(50vw + 10px);
+      width: calc((43vw - 23px) * var(--k));
+    }
+  }
+
+  @include slide-stack {
+    flex-direction: column;
+    align-items: stretch;
+    padding: 30px $arrow-zone 130px;
+
+    .slide-text {
+      display: contents;
+    }
+    h2 {
+      order: 1;
+      font-size: 24px;
+      line-height: 24px;
+      font-weight: 700;
+      text-align: center;
+    }
+    h3 {
+      order: 2;
+      font-size: 19px;
+      font-weight: 500;
+      line-height: 48px;
+      min-height: 0;
+      text-align: center;
+      margin: 0 0 18px;
+    }
+    .slide-img {
+      order: 3;
+      position: static;
+      transform: none;
+      width: calc(85% * var(--k));
+      align-self: center;
+    }
+    .slide-desc {
+      order: 4;
+      font-size: 16px;
+      line-height: 24px;
+      margin-top: 21px;
+    }
+    .slide-btn {
+      order: 5;
+      align-self: center;
+      margin-top: 35px;
+    }
+  }
+  @include mobile {
+    padding: 30px $arrow-zone 60px;
+
+    h3 {
+      margin-bottom: 14px;
+    }
+    &:last-child h3 {
+      margin-bottom: 9px;
+    }
+  }
+  @media (max-width: 440px) {
+    padding-inline: 30px;
+  }
+}
+
+.arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 80px;
+  height: 80px;
+  border: 0;
+  background: transparent;
+  padding: 0;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+
+  &.prev {
+    left: 0;
+  }
+  &.next {
+    right: 0;
+  }
+
+  @media (max-width: 440px) {
+    display: none;
+  }
+}
+
+// ---- Home services -------------------------------------------------------
+.home-services {
+  display: flow-root;
+  container-type: inline-size;
+  padding: 0 0 145px;
+
+  .page-title {
+    margin: 30px 0;
+
+    @include mobile {
+      margin: 35px 0;
+    }
+  }
+
+  @include tablet {
+    padding-bottom: 145px;
+  }
+  @include mobile {
+    padding-bottom: 134px;
+  }
+
+  .services-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto auto;
+    padding: 0 9.6cqw;
+    margin: 0;
+
+    @include tablet {
+      grid-template-columns: 1fr;
+      grid-template-rows: none;
+      padding: 10px 0 0;
+    }
+  }
+  .service {
+    display: grid;
+    grid-row: span 2;
+    grid-template-rows: subgrid;
+    text-align: center;
+
+    img {
+      display: block;
+      align-self: center;
+      margin: 10px auto 10px;
+      width: min(calc((40.4cqw - 171px) * 0.85), 800px);
+    }
+    &:last-child img {
+      margin-top: 20px;
+      margin-bottom: 0;
+    }
+    h3 {
+      font: 600 36px/36px $font-main;
+      color: $dark;
+      margin: 30px 10px 10px;
+    }
+
+    @include tablet {
+      grid-row: auto;
+      grid-template-rows: none;
+
+      img {
+        width: calc((100% - 170px) * 0.85);
+        margin: 0 auto;
+      }
+      & + .service img {
+        margin-top: 40px;
+      }
+      h3 {
+        margin: 20px 10px 50px;
+      }
+      &:first-child h3 {
+        margin-bottom: 50px;
+      }
+    }
+    @include mobile {
+      img {
+        width: calc((100% - 100px) * 0.85);
+      }
+      h3 {
+        font-size: 8cqw;
+        line-height: 1.001;
+      }
+      &:first-child h3 {
+        margin-bottom: 112px;
+      }
+      &:last-child h3 {
+        margin-bottom: 10px;
+      }
+      & + .service img {
+        margin-top: 0;
+      }
+    }
+  }
+}
+
+// ---- Books grid ----------------------------------------------------------
+.book-grid {
+  container-type: inline-size;
+  width: calc(70% - 20px);
+  margin: 0 auto 90px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 30px;
+
+  @include tablet {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  @include mobile {
+    width: calc(100% - 20px);
+    grid-template-columns: 1fr;
+    gap: 19px;
+  }
+}
+
+.book-card {
+  position: relative;
+  height: calc(370px + 11.5vw);
+  text-align: center;
+  background: #fff;
+  border: 3px solid $border-soft;
+  border-radius: 5px;
+
+  @media (min-width: 702px) and (max-width: 767px) {
+    height: calc(225px + 35vw);
+  }
+  @include mobile {
+    height: calc(265px + 70vw);
+  }
+
+  .book-card-img {
+    display: block;
+    aspect-ratio: 4 / 3;
+    overflow: hidden;
+
+    img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: fill;
+    }
+  }
+  h2 {
+    margin: 20px 10px 15px;
+    line-height: 23px;
+
+    a {
+      display: block;
+      padding: 6px;
+      font: 500 min(max(1.5cqw, 18px), 22px) / 23px $font-alt;
+      color: #333;
+    }
+  }
+  .author {
+    font: 500 16.8px/25.2px $font-main;
+    color: #6b6b6b;
+    margin: 0;
+  }
+  .price {
+    font: 400 14px/24px $font-alt;
+    color: #6f6f6f;
+    margin: 0;
+  }
+  .btn-light {
+    position: absolute;
+    left: 50%;
+    bottom: 45px;
+    transform: translateX(-50%);
+    white-space: nowrap;
+
+    @media (min-width: 702px) and (max-width: 767px) {
+      width: 200px;
+      bottom: 37px;
+    }
+    @include mobile {
+      bottom: 46px;
+    }
+  }
+}
+
+// ---- Single book ---------------------------------------------------------
+.product {
+  width: min(calc(85vw - 39px), 1261px);
+  margin: 50px auto 120px;
+  font-family: $font-main;
+
+  @include tablet {
+    width: 84%;
+    margin: 50px auto 143px;
+  }
+  @include mobile {
+    width: calc(100% - 40px);
+    margin-top: 40px;
+  }
+}
+
+.product-top,
+.product-bottom {
+  display: flex;
+  align-items: flex-start;
+
+  @include tablet {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}
+
+.product-top {
+  gap: 35px;
+
+  margin-left: -5px;
+  min-height: 319px;
+
+  @media (min-width: 1200px) {
+    margin-left: -10px;
+  }
+  @media (min-width: 1700px) {
+    margin-left: 0;
+  }
+
+  width: min(calc(85vw - 42px), 1240px);
+  justify-content: space-between;
+
+  .product-gallery {
+    flex: 0 0 47.196%;
+  }
+  .product-summary {
+    flex: 0 0 50%;
+  }
+
+  @include tablet {
+    width: auto;
+    margin-left: 0;
+    min-height: 0;
+    gap: 39px;
+  }
+  @include mobile {
+    gap: 28px;
+  }
+}
+
+.product-gallery {
+  position: relative;
+
+  img {
+    display: block;
+    width: 100%;
+  }
+  .zoom {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    z-index: 2;
+    width: 36px;
+    height: 36px;
+    border-radius: 100%;
+    border: 0;
+    background: #fff;
+    padding: 0;
+    display: grid;
+    place-items: center;
+
+    img {
+      width: 16px;
+      height: 16px;
+      margin: 0;
+    }
+  }
+}
+
+.product-summary {
+  padding-top: 8px;
+
+  h1 {
+    font-weight: 600;
+    font-size: 32px;
+    line-height: 1.2;
+    color: $text;
+  }
+  .product-author {
+    font-weight: 500;
+    font-size: 28px;
+    line-height: 42px;
+    margin-top: 6px;
+    color: $dark;
+  }
+  .product-price {
+    font: 500 27px/50px $font-alt;
+    margin: 25px 0 66px;
+    color: $dark;
+  }
+  .add-form {
+    display: flex;
+    gap: 15px;
+    width: 410px;
+    max-width: 100%;
+
+    .qty {
+      flex: 0 0 140px;
+      width: 140px;
+      height: 54px;
+      padding: 12px;
+      border: 1.6px solid #333;
+      border-radius: 5px;
+      background: #fff;
+      align-items: center;
+      gap: 0;
+
+      .step {
+        flex: 0 0 26px;
+        height: 24px;
+        padding: 0;
+        color: #333;
+        display: grid;
+        place-items: center;
+        background: none;
+        border: 0;
+      }
+      input {
+        flex: 0 0 62px;
+        width: 62px;
+        height: 26px;
+        color: #212529;
+        font: 600 17px/25.5px -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+      }
+    }
+
+    .btn-main {
+      flex: 0 0 255px;
+      font-weight: 500;
+    }
+  }
+
+  @include tablet {
+    text-align: center;
+    padding-top: 0;
+
+    h1 {
+      font-size: 30px;
+    }
+    .product-author {
+      font-size: 25px;
+      line-height: 29px;
+      margin-top: 12px;
+    }
+    .product-price {
+      margin: 0 0 44px;
+      line-height: 32px;
+      padding-top: 43px;
+    }
+    .add-form {
+      margin: 0 auto;
+      justify-content: center;
+    }
+  }
+  @include mobile {
+    h1 {
+      font-size: 24px;
+      line-height: 29px;
+    }
+    .product-author {
+      font-size: 20px;
+      line-height: 24px;
+      margin-top: 10px;
+    }
+    .product-price {
+      font-size: 20px;
+      line-height: 24px;
+      padding-top: 37px;
+      margin-bottom: 47px;
+    }
+    .add-form {
+      gap: 15px;
+      justify-content: flex-start;
+
+      .btn-main {
+        flex-basis: 180px;
+      }
+    }
+  }
+}
+
+.product-bottom {
+  gap: 33px;
+  margin-top: 40px;
+
+  .product-desc {
+    flex: 0 0 63.5%;
+    margin-left: 5px;
+
+    @media (min-width: 1200px) {
+      margin-left: 0;
+    }
+  }
+  .product-attrs {
+    flex: 1;
+  }
+
+  @include tablet {
+    gap: 50px;
+    margin-top: 70px;
+
+    .product-desc {
+      flex: none;
+      margin: 0 10px;
+    }
+    .product-attrs {
+      flex: none;
+      width: calc(100% - 20px);
+      margin: 0 10px;
+    }
+  }
+  @include mobile {
+    gap: 40px;
+
+    .product-desc,
+    .product-attrs {
+      margin-left: 0;
+      margin-right: 0;
+    }
+    .product-attrs {
+      width: 100%;
+    }
+  }
+}
+
+.product-desc {
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 24px;
+  text-align: justify;
+  color: $text;
+
+  p {
+    margin: 0 0 15px;
+  }
+
+  @include mobile {
+    font-size: 14px;
+    line-height: 21px;
+  }
+}
+
+.product-attrs {
+  border-collapse: collapse;
+  width: 100%;
+  font-size: 14.4px;
+
+  th,
+  td {
+    background: rgba(128, 128, 128, 0.07);
+    border: 0.8px solid rgba(128, 128, 128, 0.5);
+    border-top: 0;
+    border-bottom: 0.8px dotted rgba(0, 0, 0, 0.1);
+    color: $text;
+    line-height: 21.6px;
+  }
+  tr:nth-child(2n) th,
+  tr:nth-child(2n) td {
+    background: rgba(0, 0, 0, 0.024);
+  }
+  tr:first-child th,
+  tr:first-child td {
+    border-top: 0.8px solid rgba(128, 128, 128, 0.5);
+  }
+  tr:last-child th,
+  tr:last-child td {
+    border-bottom: 0.8px solid rgba(128, 128, 128, 0.5);
+  }
+  th {
+    font: 700 14.4px/21.6px $font-main;
+    width: 150px;
+    text-align: center;
+    padding: 8px;
+  }
+  td {
+    font-family: $font-alt;
+    padding: 0 0 0 20px;
+  }
+
+  // on phones the original stacks each label above its value
+  @include mobile {
+    display: block;
+
+    tbody,
+    tr,
+    th,
+    td {
+      display: block;
+      width: 100%;
+    }
+    th,
+    td {
+      padding-top: 5px;
+      padding-bottom: 5px;
+    }
+    th {
+      padding-inline: 8px;
+    }
+  }
+}
+
+.lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  border: 0;
+  background: rgba(0, 0, 0, 0.85);
+  display: grid;
+  place-items: center;
+  padding: 20px;
+
+  img {
+    max-height: 100%;
+    max-width: 100%;
+  }
+}
+
+// ---- Services page -------------------------------------------------------
+.services {
+  width: 100%;
+  padding: 0 13vw 101px;
+  margin: 60px auto 0;
+  font-family: $font-main;
+
+  @include tablet {
+    padding: 0 3vw 101px;
+  }
+  @include mobile {
+    margin-top: 54px;
+  }
+}
+
+.services-title {
+  font: 600 45px/1 $font-main;
+  letter-spacing: 1.5px;
+  color: $dark;
+  text-align: center;
+
+  @include tablet {
+    font-size: 38px;
+  }
+  @include mobile {
+    font-size: 37px;
+    width: 275px;
+    max-width: 100%;
+    margin-inline: auto;
+  }
+}
+
+.services .section-title {
+  font: 600 32px/1 $font-main;
+  margin: 60px 0 35px;
+  color: $dark;
+
+  & ~ .section-title {
+    margin-top: 105px;
+  }
+
+  @include tablet {
+    font-size: 28px;
+  }
+  @include mobile {
+    font-size: 18px;
+    line-height: 19px;
+    margin: 44px 0 20px;
+
+    & ~ .section-title {
+      margin-top: 50px;
+    }
+  }
+}
+
+table.rounded-corners {
+  font-family: $font-main;
+  text-align: center;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 27px;
+  color: #41413e;
+  width: 100%;
+  table-layout: fixed;
+  border-spacing: 0;
+  border-collapse: separate;
+  border-radius: 7px;
+  border: 3px solid $dark;
+  overflow: hidden;
+
+  td {
+    padding: 20.75px 4px;
+    background: transparent;
+  }
+  tr:first-child > td {
+    background: rgba(128, 128, 128, 0.07);
+  }
+  td:not(:last-child) {
+    border-right: 3px solid $dark;
+  }
+  tr:not(:last-child) > td {
+    border-bottom: 3px solid $dark;
+  }
+
+  @include tablet {
+    td {
+      padding: 14px 4px;
+    }
+  }
+  @include mobile {
+    font-size: 13px;
+    line-height: 19.5px;
+
+    td {
+      padding: 16px 2px;
+    }
+  }
+}
+
+ul.notes {
+  font: 500 16px/24px $font-main;
+  color: $dark;
+  margin: 20px 0 0;
+  padding-left: 40px;
+
+  @include mobile {
+    font-size: 14px;
+    line-height: 21px;
+    padding-left: 30px;
+  }
+}
+
+// ---- Contact -------------------------------------------------------------
+.contact,
+.recommendations {
+  font-family: $font-main;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 24px;
+  color: #41413e;
+  text-align: justify;
+
+  p {
+    margin: 0 0 14.4px;
+  }
+
+  @include mobile {
+    font-size: 14px;
+    line-height: 21px;
+  }
+}
+
+.contact {
+  width: min(88.4%, 977px);
+  margin: 105px auto 0;
+  display: flex;
+  align-items: flex-start;
+  gap: 49px;
+
+  img {
+    flex: 0 0 42.07%;
+    width: 42.07%;
+  }
+  .contact-text {
+    flex: 1;
+    min-width: 0;
+  }
+
+  @include tablet {
+    width: calc(100% - 60px);
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
+    margin-top: 50px;
+
+    .contact-text {
+      order: 1;
+    }
+    .contact-text p:first-child {
+      text-align: center;
+      margin-bottom: 50px;
+    }
+    img {
+      order: 2;
+      flex: none;
+      width: 500px;
+      max-width: 100%;
+      margin: 41px auto 0;
+    }
+  }
+  @include mobile {
+    .contact-text p:first-child {
+      margin-bottom: 50px;
+    }
+    img {
+      width: 100%;
+      margin-top: 36px;
+    }
+  }
+}
+
+.rec-title {
+  font: 600 45px/1 $font-main;
+  letter-spacing: 4.3px;
+  color: $dark;
+  text-align: center;
+  margin: 0 0 42px;
+
+  @include tablet {
+    font-size: 36px;
+  }
+  @include mobile {
+    font-size: 31px;
+    width: 295px;
+    max-width: 100%;
+    margin: 0 auto 42px;
+  }
+}
+
+.recommendations {
+  width: min(88.4%, 977px);
+  margin: 100px auto 129px;
+
+  .rec-title {
+    margin-inline: 0;
+    width: auto;
+  }
+  .rec-gap {
+    margin-top: 37px;
+  }
+
+  @include tablet {
+    width: calc(100% - 60px);
+    margin-top: 90px;
+  }
+  @include mobile {
+    margin-top: 80px;
+  }
+}
+
+// ---- Cart / checkout -----------------------------------------------------
+.woo-notice,
+.woo-success,
+.woo-error {
+  font-family: $font-main;
+  border-top: 3px solid $accent;
+  background: #f6f5f8;
+  padding: 18px 24px;
+  margin: 0 0 24px;
+}
+.woo-success {
+  // same colours as the added-to-cart bar (.notice)
+  border-top-color: $notice;
+  background: #f4f0ea;
+  color: #5d554b;
+}
+.woo-error {
+  border-top-color: #b81c23;
+}
+
+$cart-text: #202b46;
+$field-border: #e8e8e8;
+$card-shadow: 0 8px 18px rgba(0, 1, 35, 0.05);
+
+.cart-wrap {
+  width: 91%;
+  margin: 5px auto 0;
+
+  // desktop: rows on the left, totals on their right
+  @media (min-width: 1360px) {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 400px;
+    column-gap: 41px;
+    width: calc(100% - 128px);
+    align-items: start;
+
+    .cart-totals {
+      margin-top: 86px;
+    }
+  }
+
+  @include tablet {
+    width: calc(100% - 66px);
+  }
+  @include mobile {
+    width: calc(100% - 20px);
+    margin-top: -5px;
+  }
+}
+
+.cart-scroll {
+  @include mobile {
+    overflow-x: auto;
+  }
+}
+
+.cart-table {
+  width: 100%;
+  table-layout: fixed;
+  border-collapse: separate;
+  border-spacing: 0 13px;
+  font-family: $sys;
+  color: $cart-text;
+  font-size: 20px;
+  filter: drop-shadow($card-shadow);
+
+  // X is centred between the row edge and the image; the title column takes the rest
+  .c-rm { width: 56px; }
+  .c-img { width: 130px; }
+  .c-name { width: auto; }
+  .c-price { width: 16%; }
+  .c-qty { width: 11%; }
+  .c-total { width: 16%; }
+
+  th {
+    text-align: center;
+    height: 60px;
+    font-size: 18px;
+    font-weight: 500;
+    padding: 0;
+
+    // centred over the 120px image (the cell keeps a 10px gap on its right)
+    &.th-book {
+      text-align: center;
+      padding: 0 10px 0 0;
+    }
+  }
+  td {
+    padding: 15px;
+    text-align: center;
+    vertical-align: middle;
+    background: #fff;
+
+    &:first-child {
+      border-radius: 5px 0 0 5px;
+    }
+    &:last-child {
+      border-radius: 0 5px 5px 0;
+      font-weight: 500;
+    }
+    &:nth-child(4) {
+      color: #747c92;
+    }
+    &:nth-child(3) {
+      text-align: left;
+      padding-left: 18px;
+    }
+    &:nth-child(2) {
+      padding-left: 0;
+      padding-right: 10px;
+    }
+    &:nth-child(1) {
+      padding: 15px 0;
+    }
+    &:nth-child(n + 4) {
+      padding-inline: 8px;
+      white-space: nowrap;
+    }
+  }
+  .thumb {
+    text-align: left;
+
+    img {
+      display: block;
+      width: 120px;
+      height: 120px;
+      object-fit: cover;
+      border-radius: 5px;
+      background: $header-bg;
+    }
+  }
+  .qty {
+    margin: 0 auto;
+    justify-content: center;
+    border: 0;
+    background: transparent;
+    width: auto;
+    height: 50px;
+    gap: 0;
+
+    button {
+      flex: 0 0 auto;
+      padding: 10px 8px;
+      font: 400 20px $sys;
+      color: #97a0b6;
+    }
+    input {
+      flex: 0 0 auto;
+      width: 46px;
+      font: 400 20px $sys;
+      color: $cart-text;
+    }
+  }
+  .rm button {
+    border: 0;
+    background: none;
+    color: #b8c0d4;
+    line-height: 0;
+    padding: 6px;
+    display: inline-grid;
+    place-items: center;
+  }
+
+  @include tablet {
+    .c-rm { width: 48px; }
+    .c-img { width: 130px; }
+    .c-name { width: auto; }
+    .c-price { width: 18%; }
+    .c-qty { width: 13%; }
+    .c-total { width: 18%; }
+  }
+  @include mobile {
+    width: 718px;
+
+    .c-rm { width: 48px; }
+    .c-img { width: 130px; }
+    .c-name { width: 200px; }
+    .c-price { width: 120px; }
+    .c-qty { width: 100px; }
+    .c-total { width: 120px; }
+  }
+}
+
+.cart-totals {
+  width: 400px;
+  margin: 0 0 139px auto;
+  font-family: $sys;
+
+  table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0 13px;
+    margin: -13px 0 0;
+    filter: drop-shadow($card-shadow);
+  }
+  th,
+  td {
+    padding: 18px 0;
+    text-align: left;
+    font-size: 18px;
+    font-weight: 500;
+    color: #737373;
+    vertical-align: middle;
+    background: #fff;
+  }
+  th {
+    width: 160px;
+    padding-left: 18px;
+    border-radius: 5px 0 0 5px;
+  }
+  td {
+    text-align: right;
+    font-size: 20px;
+    color: $cart-text;
+    padding-right: 19px;
+    border-radius: 0 5px 5px 0;
+  }
+  .methods {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    font-size: 18px;
+    line-height: 24px;
+    font-weight: 400;
+    color: #737373;
+    align-items: flex-end;
+  }
+
+  @include tablet {
+    width: 100%;
+
+    th {
+      width: 288px;
+    }
+  }
+  @include mobile {
+    th {
+      width: 142px;
+    }
+  }
+}
+
+.btn-main.big {
+  font-family: $sys;
+  font-size: 20px;
+  line-height: 20px;
+  padding: 23px 28px;
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.05);
+}
+
+.checkout {
+  container-type: inline-size;
+  width: min(81%, 1080px);
+  padding: 18px 0 60px;
+  margin-inline: auto;
+
+  @include tablet {
+    width: 81.5%;
+  }
+  @include mobile {
+    width: calc(100% - 20px);
+  }
+
+  h3 {
+    font: 500 28px/34px $font-main;
+    color: #222;
+    margin: 0 0 16px;
+  }
+  .checkout-fields > h3:first-child {
+    margin-bottom: 29px;
+  }
+  .checkout-cols {
+    display: grid;
+    grid-template-columns: 1fr calc(19.6cqw + 213px);
+    gap: 54px;
+    align-items: start;
+    margin: 0 10px;
+
+    @include tablet {
+      grid-template-columns: 249fr 317fr;
+      gap: 54px;
+    }
+    @include mobile {
+      grid-template-columns: 1fr;
+      gap: 0;
+    }
+  }
+  .form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap: 36px;
+
+    @include tablet {
+      column-gap: 15px;
+    }
+    @include mobile {
+      column-gap: 19px;
+    }
+  }
+  .form-row {
+    margin: 0 3px 16px;
+    display: flex;
+    flex-direction: column;
+
+    &.wide {
+      grid-column: 1 / -1;
+    }
+    &:nth-child(-n + 2) {
+      margin-bottom: 6px;
+    }
+    label {
+      font: 500 16px/32px $font-main;
+      color: #787878;
+    }
+    abbr {
+      color: #b81c23;
+      text-decoration: none;
+    }
+    .opt {
+      font-weight: 400;
+    }
+    input,
+    select,
+    textarea {
+      font: 400 14px $font-main;
+      height: 41px;
+      padding: 0 12px;
+      border: 0.8px solid $field-border;
+      border-radius: 5px;
+      background: #fff;
+      color: $dark;
+      width: 100%;
+
+      &:focus {
+        outline: 2px solid rgba($accent, 0.5);
+        border-color: $accent;
+      }
+    }
+    textarea {
+      height: auto;
+      padding: 10px 12px;
+    }
+    &.invalid input,
+    &.invalid select {
+      border-color: #b81c23;
+    }
+    .err {
+      color: #b81c23;
+      font-size: 13px;
+      margin-top: 4px;
+    }
+  }
+  .ship-toggle {
+    font-size: 18px;
+    margin-top: 10px;
+
+    label {
+      cursor: pointer;
+    }
+  }
+
+  .order-review {
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      border: 0.8px solid $field-border;
+      margin-bottom: 20px;
+      background: #fff;
+      box-shadow: 0 8px 18px rgba(0, 1, 35, 0.05);
+    }
+    th,
+    td {
+      padding: 9.5px 14px;
+      border-bottom: 0.8px solid $field-border;
+      text-align: left;
+      vertical-align: top;
+      font-weight: 500;
+      color: #737373;
+    }
+    td:last-child {
+      text-align: right;
+      white-space: nowrap;
+    }
+    th:last-child {
+      white-space: nowrap;
+    }
+    .methods {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      text-align: left;
+
+      li {
+        padding: 2px 0;
+      }
+    }
+    .num {
+      font-family: $font-alt;
+    }
+    .payment {
+      padding: 4px 0 20px;
+      color: #737373;
+
+      p {
+        margin: 0 0 8px;
+        font-size: 14px;
+      }
+      p:first-child {
+        font-weight: 500;
+        font-size: 16px;
+      }
+      // the cash text sits flush against the post-express note when that note is shown
+      p:nth-child(2):not(:last-child) {
+        margin-bottom: 0;
+      }
+    }
+    .btn-main {
+      font-size: 20px;
+      line-height: 20px;
+      padding: 20px 28px;
+    }
+  }
+}
+
+.cart-page {
+  font-family: $font-main;
+  padding-bottom: 20px;
+
+  .woo-notice,
+  .center {
+    width: min(100% - 60px, 940px);
+    margin-inline: auto;
+  }
+}
+
+.cart-page .page-title {
+  width: 94%;
+  margin-inline: auto;
+
+  @include mobile {
+    line-height: 90px;
+  }
+}

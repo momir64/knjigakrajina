@@ -1,0 +1,213 @@
+@use 'sass:color';
+@use 'vars' as *;
+
+@font-face {
+  font-family: 'eicons';
+  src: url('/fonts/eicons.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: block;
+}
+
+.eicon {
+  display: inline-block;
+  font-family: 'eicons';
+  font-style: normal;
+  font-weight: 400;
+  line-height: 1;
+  text-rendering: auto;
+  -webkit-font-smoothing: antialiased;
+
+  &.eicon-cart::before {
+    content: '\e8ea';
+  }
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  line-height: 1.5;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  background: $bg;
+  color: $text;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif;
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+main {
+  display: flow-root;
+  min-height: calc(100vh - 380px);
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  border: 0;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+h1,
+h2,
+h3 {
+  margin: 0;
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+}
+
+.page-title {
+  font-family: $font-main;
+  font-weight: 600;
+  font-size: 46px;
+  line-height: 100px;
+  letter-spacing: 4.3px;
+  color: $dark;
+  text-align: center;
+  margin: 35px 0 30px;
+}
+
+.section-title {
+  font-family: $font-main;
+  font-weight: 500;
+  font-size: 26px;
+  line-height: 1.3;
+  color: $dark;
+  margin: 24px 0;
+}
+
+.content-narrow {
+  width: min(100% - 60px, 940px);
+  margin-inline: auto;
+  padding: 30px 0 60px;
+  font-family: $font-main;
+}
+
+.center {
+  text-align: center;
+}
+
+.spacer {
+  height: 50px;
+}
+
+// ---- Buttons -------------------------------------------------------------
+.btn-main {
+  display: inline-block;
+  background: $accent-dark;
+  color: #fff;
+  border: 0;
+  border-radius: 5px;
+  font-family: $font-main;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 16px;
+  padding: 19px 28px;
+  text-align: center;
+  transition: background 0.2s;
+
+  &:hover {
+    background: color.adjust($accent-dark, $lightness: -6%);
+  }
+  &.block {
+    display: block;
+    width: 100%;
+  }
+  &.inline {
+    margin-top: 10px;
+  }
+  &:disabled {
+    opacity: 0.6;
+    cursor: wait;
+  }
+}
+
+.btn-light {
+  background: $light-btn;
+  color: $dark;
+  border: 0;
+  border-radius: 4px;
+  font-family: $font-main;
+  font-size: 14px;
+  line-height: 21px;
+  min-height: 36px;
+  padding: 6px 22px 8px;
+  transition: background 0.2s;
+
+  &:hover {
+    background: color.adjust($light-btn, $lightness: -5%);
+  }
+}
+
+// ---- Quantity stepper ----------------------------------------------------
+.qty {
+  display: flex;
+  align-items: stretch;
+  border: 2px solid $dark;
+  border-radius: 5px;
+  height: 54px;
+  width: 110px;
+  overflow: hidden;
+  background: transparent;
+
+  button {
+    flex: 0 0 34px;
+    border: 0;
+    background: transparent;
+    font-size: 22px;
+    color: $dark;
+    padding: 0;
+  }
+  input {
+    flex: 1;
+    min-width: 0;
+    border: 0;
+    background: transparent;
+    text-align: center;
+    font-size: 15px;
+    font-family: $font-main;
+    -moz-appearance: textfield;
+    appearance: textfield;
+    padding: 0;
+
+    &::-webkit-inner-spin-button,
+    &::-webkit-outer-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+    &:focus {
+      outline: none;
+    }
+  }
+
+  &.small {
+    height: 40px;
+    width: 100px;
+  }
+}
+
+// the original cart/checkout pages are 152px taller than the viewport
+.cart-page,
+.checkout {
+  display: flow-root;
+  min-height: calc(100vh - 380px + 152px);
+}
+
+// empty cart: footer exactly at the bottom edge, no vertical scroll
+.cart-page.empty {
+  min-height: calc(100vh - 380px);
+}
