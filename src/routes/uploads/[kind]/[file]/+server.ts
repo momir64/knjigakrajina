@@ -16,6 +16,7 @@ export const GET: RequestHandler = async ({ params, request }) => {
     'cache-control': 'public, max-age=86400',
     'content-type': IMAGE_TYPES[extensionOf(file)],
     'x-content-type-options': 'nosniff',
+    'content-security-policy': "default-src 'none'; sandbox",
   }
   if (request.headers.get('if-none-match') === etag) return new Response(null, { status: 304, headers })
   return new Response(new Uint8Array(await readFile(file)), { headers })

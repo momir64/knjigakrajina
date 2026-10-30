@@ -14,7 +14,7 @@
     image?: string
     type?: string
     noindex?: boolean
-    jsonLd?: Record<string, unknown>
+    jsonLd?: Record<string, unknown> | Record<string, unknown>[]
   }
   let { title, description, path, image, type = 'website', noindex = false, jsonLd }: Props = $props()
 

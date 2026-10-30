@@ -31,7 +31,7 @@
   "binding": "Тврд",
   "script": "Ћирилица",
   "year": "2019",
-  "sort": 1
+  "sort": 10
  },
  {
   "slug": "oj-malena-mala-moja",
@@ -48,7 +48,7 @@
   "binding": "Тврд",
   "script": "Ћирилица",
   "year": "2021",
-  "sort": 2
+  "sort": 20
  },
  {
   "slug": "ispod-pepela",
@@ -65,7 +65,7 @@
   "binding": "Тврд",
   "script": "Ћирилица",
   "year": "2018",
-  "sort": 3
+  "sort": 30
  },
  {
   "slug": "bilo-jednom-na-baniji",
@@ -82,7 +82,7 @@
   "binding": "Меки",
   "script": "Ћирилица",
   "year": "2022",
-  "sort": 4
+  "sort": 40
  },
  {
   "slug": "kad-cikne-zvono",
@@ -99,7 +99,7 @@
   "binding": "Тврд",
   "script": "Ћирилица",
   "year": "2023",
-  "sort": 5
+  "sort": 50
  },
  {
   "slug": "san-o-nestajanju",
@@ -116,7 +116,7 @@
   "binding": "Тврд",
   "script": "Ћирилица",
   "year": "2021",
-  "sort": 6
+  "sort": 60
  },
  {
   "slug": "kuridza",
@@ -133,7 +133,7 @@
   "binding": "Тврд",
   "script": "Ћирилица",
   "year": "2021",
-  "sort": 7
+  "sort": 70
  },
  {
   "slug": "antologija-srpske-narodne-poezije",
@@ -150,7 +150,7 @@
   "binding": "Тврд",
   "script": "Ћирилица",
   "year": "2020",
-  "sort": 8
+  "sort": 80
  },
  {
   "slug": "djavo-na-papuku",
@@ -167,7 +167,7 @@
   "binding": "Тврд",
   "script": "Ћирилица",
   "year": "2024",
-  "sort": 9
+  "sort": 90
  },
  {
   "slug": "pjesme",
@@ -184,7 +184,7 @@
   "binding": "Тврд",
   "script": "Ћирилица",
   "year": "2018",
-  "sort": 10
+  "sort": 100
  },
  {
   "slug": "kob",
@@ -201,7 +201,7 @@
   "binding": "Тврд",
   "script": "Ћирилица",
   "year": "2017",
-  "sort": 11
+  "sort": 110
  },
  {
   "slug": "antologija-krajiskih-balada",
@@ -218,7 +218,7 @@
   "binding": "Тврд",
   "script": "Ћирилица",
   "year": "2021",
-  "sort": 12
+  "sort": 120
  },
  {
   "slug": "poslednji-smokvin-list",
@@ -235,7 +235,7 @@
   "binding": "Тврд",
   "script": "Ћирилица",
   "year": "2021",
-  "sort": 13
+  "sort": 130
  },
  {
   "slug": "rijeci-vrbnika-i-kninskog-kraja",
@@ -252,7 +252,7 @@
   "binding": "Тврд",
   "script": "Ћирилица",
   "year": "2022",
-  "sort": 14
+  "sort": 140
  },
  {
   "slug": "mermer-i-olovo",
@@ -269,7 +269,7 @@
   "binding": "Тврд",
   "script": "Ћирилица",
   "year": "2019",
-  "sort": 15
+  "sort": 150
  },
  {
   "slug": "devorni",
@@ -286,6 +286,6 @@
   "binding": "Тврд",
   "script": "Ћирилица",
   "year": "2020",
-  "sort": 16
+  "sort": 160
  }
 ]

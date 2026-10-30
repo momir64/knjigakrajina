@@ -34,10 +34,11 @@ const typo: Record<string, Pick<Slide, 'ah' | 'ag' | 'tlh' | 'tfs'>> = {
 
 export const load: PageServerLoad = () => {
   const books = listBooks()
-  const slides: Slide[] = featured.map(([slug, file, [k, yA, yB], html]) => {
+  // a book that was hidden or deleted in the back office simply drops out of the slider
+  const slides: Slide[] = featured.flatMap(([slug, file, [k, yA, yB], html]) => {
     const b = books.find((x) => x.slug === slug)
-    if (!b) throw new Error(`featured book missing from the database: ${slug}`)
-    return { slug, title: b.title, author: b.author, html: hyph(html), image: sliderImage(file), k, yA, yB, ...typo[slug] }
+    if (!b) return []
+    return [{ slug, title: b.title, author: b.author, html: hyph(html), image: sliderImage(file), k, yA, yB, ...typo[slug] }]
   })
   return { slides }
 }

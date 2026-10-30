@@ -12,6 +12,8 @@
   let qty = $state(1)
   let zoom = $state(false)
 
+  // schema.org wants its own values for the binding
+  const BOOK_FORMATS: Record<string, string> = { тврд: 'https://schema.org/Hardcover', тврди: 'https://schema.org/Hardcover', мек: 'https://schema.org/Paperback', меки: 'https://schema.org/Paperback' }
   const num = (v: string) => String(v).replace('.', ',')
   const rows = $derived(
     book
@@ -23,6 +25,7 @@
           ['Повез', book.binding],
           ['Писмо', book.script],
           ['Година издавања', book.year],
+          ['ISBN', book.isbn],
         ].filter(([, v]) => v)
       : [],
   )
@@ -40,20 +43,42 @@
   path="/knjige/{book.slug}/"
   image={bookImage(book.image)}
   type="book"
-  jsonLd={{
+  jsonLd={[{
     '@context': 'https://schema.org',
     '@type': ['Product', 'Book'],
+    '@id': '/knjige/' + book.slug + '/#product',
     name: book.title,
+    sku: book.slug,
+    brand: { '@type': 'Brand', name: 'Књига Крајина' },
+    publisher: { '@id': '/#org' },
     author: { '@type': 'Person', name: book.author },
     description: plainText(book.description, 500),
     image: bookImage(book.image),
     url: '/knjige/' + book.slug + '/',
     inLanguage: 'sr',
     numberOfPages: book.pages || undefined,
-    bookFormat: book.binding || undefined,
+    bookFormat: BOOK_FORMATS[book.binding.toLowerCase()],
     datePublished: book.year ? String(book.year) : undefined,
-    offers: { '@type': 'Offer', priceCurrency: 'RSD', price: book.price, availability: 'https://schema.org/InStock', url: '/knjige/' + book.slug + '/' },
-  }}
+    isbn: book.isbn || undefined,
+    offers: {
+      '@type': 'Offer',
+      priceCurrency: 'RSD',
+      price: book.price,
+      priceValidUntil: new Date(Date.now() + 365 * 864e5).toISOString().slice(0, 10),
+      itemCondition: 'https://schema.org/NewCondition',
+      availability: 'https://schema.org/InStock',
+      url: '/knjige/' + book.slug + '/',
+      seller: { '@id': '/#org' },
+    },
+  }, {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Књига Крајина', item: '/' },
+      { '@type': 'ListItem', position: 2, name: 'Књиге', item: '/knjige/' },
+      { '@type': 'ListItem', position: 3, name: book.title, item: '/knjige/' + book.slug + '/' },
+    ],
+  }]}
 />
 
 {#if book}

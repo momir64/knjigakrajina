@@ -7,7 +7,7 @@
   import Seo from '#lib/Seo.svelte'
   import { hideNotice } from '#lib/cart.svelte.js'
 
-  let { children } = $props()
+  let { data, children } = $props()
 
   $effect(() => {
     page.url.pathname
@@ -15,10 +15,14 @@
   })
 </script>
 
-<Seo />
-<Header />
-<Notice />
-<main>
+{#if data.chrome !== false}
+  <Seo />
+  <Header />
+  <Notice />
+  <main>
+    {@render children()}
+  </main>
+  <Footer />
+{:else}
   {@render children()}
-</main>
-<Footer />
+{/if}

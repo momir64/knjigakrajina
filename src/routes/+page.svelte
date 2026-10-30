@@ -14,6 +14,8 @@
   image={data.slides[0]?.image}
 />
 
+<h1 class="visually-hidden">Књига Крајина – књиге о Крајишким Србима, лектура и припрема за штампу</h1>
+
 <div class="home-slider-wrap">
   <Slider slides={data.slides} />
 </div>

@@ -22,6 +22,7 @@ CREATE TABLE IF NOT EXISTS books (
     binding TEXT NOT NULL DEFAULT '',
     script TEXT NOT NULL DEFAULT '',
     year TEXT NOT NULL DEFAULT '',
+    isbn TEXT NOT NULL DEFAULT '',
     sort INTEGER NOT NULL DEFAULT 0,
     active INTEGER NOT NULL DEFAULT 1
 );
@@ -61,9 +62,14 @@ CREATE TABLE IF NOT EXISTS settings (
     key TEXT PRIMARY KEY,
     value TEXT NOT NULL
 );
+
+CREATE TABLE IF NOT EXISTS admin_sessions (
+    token_hash TEXT PRIMARY KEY,         -- SHA-256 of the cookie value
+    expires_at INTEGER NOT NULL          -- ms since epoch
+);
 `
 
-const BOOK_COLS = 'id, slug, title, author, price, description, image, weight, length, width, height, pages, binding, script, year'
+const BOOK_COLS = 'id, slug, title, author, price, description, image, weight, length, width, height, pages, binding, script, year, isbn'
 
 const SEED_COLS = ['slug', 'title', 'author', 'price', 'description', 'image', 'weight', 'length', 'width', 'height', 'pages', 'binding', 'script', 'year', 'sort'] as const
 
@@ -131,6 +137,10 @@ function open(): DatabaseSync {
   db.exec('PRAGMA journal_mode = WAL')
   migrateToUuids(db)
   db.exec(SCHEMA)
+  if (!(db.prepare('PRAGMA table_info(books)').all() as { name: string }[]).some((c) => c.name === 'isbn')) {
+    db.exec("ALTER TABLE books ADD COLUMN isbn TEXT NOT NULL DEFAULT ''") // added after the first release
+  }
+  db.exec("UPDATE orders SET status='new' WHERE status='confirmed'") // the "confirmed" step was dropped
 
   const { n } = plain<{ n: number }>(db.prepare('SELECT COUNT(*) AS n FROM books').get())
   if (n === 0) seed(db)

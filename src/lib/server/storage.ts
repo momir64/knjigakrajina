@@ -22,7 +22,7 @@ export const IMAGE_TYPES: Record<string, string> = {
   avif: 'image/avif',
 }
 
-export const MAX_UPLOAD_BYTES = 8 * 1024 * 1024
+export const MAX_UPLOAD_BYTES = 20 * 1024 * 1024
 
 export const isMediaKind = (kind: string): kind is MediaKind => (MEDIA_KINDS as readonly string[]).includes(kind)
 export const isSafeName = (name: string) => SAFE_NAME.test(name)

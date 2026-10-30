@@ -289,7 +289,13 @@ $arrow-zone: 85px;
   grid-template-columns: repeat(3, 1fr);
   gap: 30px;
 
-  @include tablet {
+  // wide desktop: four to a row, in a wider container
+  @media (min-width: 1400px) {
+    width: calc(78% - 20px);
+    grid-template-columns: repeat(4, 1fr);
+  }
+  // two to a row from 1000px down (the tablet layout below 860px is the original one)
+  @media (max-width: 1000px) {
     grid-template-columns: repeat(2, 1fr);
   }
   @include mobile {
@@ -303,10 +309,19 @@ $arrow-zone: 85px;
   position: relative;
   height: calc(370px + 11.5vw);
   text-align: center;
+
+  // narrower cards in the four-column layout: same proportions, so the height follows the image
+  @media (min-width: 1400px) {
+    height: calc(275px + 14.625vw);
+  }
   background: #fff;
   border: 3px solid $border-soft;
   border-radius: 5px;
 
+  // wider two-column cards between the original tablet layout and 1000px
+  @media (min-width: 861px) and (max-width: 1000px) {
+    height: calc(277px + 26.25vw);
+  }
   @media (min-width: 702px) and (max-width: 767px) {
     height: calc(225px + 35vw);
   }
@@ -1308,6 +1323,9 @@ $card-shadow: 0 8px 18px rgba(0, 1, 35, 0.05);
     th:last-child {
       white-space: nowrap;
     }
+    thead th:last-child {
+      text-align: right;
+    }
     .methods {
       list-style: none;
       margin: 0;
@@ -1364,4 +1382,13 @@ $card-shadow: 0 8px 18px rgba(0, 1, 35, 0.05);
   @include mobile {
     line-height: 90px;
   }
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
 }

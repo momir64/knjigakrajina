@@ -17,6 +17,7 @@ export interface Book {
   binding: string
   script: string
   year: string
+  isbn: string
 }
 
 export type ShippingMethod = 'pickup' | 'post'
