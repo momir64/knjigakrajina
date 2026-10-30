@@ -109,6 +109,28 @@ export const imageUses = (image: string, exceptId = '') =>
 
 export const nextSort = () => plain<{ n: number }>(db().prepare('SELECT COALESCE(MAX(sort), 0) + 10 AS n FROM books').get()).n
 
+/** swaps a book with its neighbour in the list order; false when the id is unknown */
+export function moveBook(id: string, dir: -1 | 1): boolean {
+  const ids = listAllBooks().map((b) => b.id)
+  const at = ids.indexOf(id)
+  if (at === -1) return false
+  const to = at + dir
+  if (to >= 0 && to < ids.length) {
+    ;[ids[at], ids[to]] = [ids[to], ids[at]]
+    // renumber so books that shared a value (or were seeded with gaps) keep a clean, unambiguous order
+    const set = db().prepare('UPDATE books SET sort=? WHERE id=?')
+    db().exec('BEGIN')
+    try {
+      ids.forEach((bookId, i) => set.run((i + 1) * 10, bookId))
+      db().exec('COMMIT')
+    } catch (e) {
+      db().exec('ROLLBACK')
+      throw e
+    }
+  }
+  return true
+}
+
 // --- settings ---
 
 export function setNotifyEmails(emails: string[]) {

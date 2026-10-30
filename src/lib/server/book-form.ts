@@ -44,8 +44,8 @@ export async function readBookForm(form: FormData, existing?: AdminBook): Promis
   const price = Number(text('price'))
   if (!/^\d{1,8}$/.test(text('price'))) errors.price = 'Цена мора бити цео број динара.'
 
-  const sort = text('sort') === '' ? (existing?.sort ?? nextSort()) : Number(text('sort'))
-  if (!Number.isInteger(sort) || Math.abs(sort) > 1_000_000) errors.sort = 'Редослед мора бити цео број.'
+  // the order is set with the arrows on the books list; a new book goes last
+  const sort = existing?.sort ?? nextSort()
 
   const description = sanitizeHtml(String(form.get('description') ?? '').trim())
   if (description.length > 50_000) errors.description = 'Опис је предугачак.'
@@ -81,7 +81,7 @@ export async function readBookForm(form: FormData, existing?: AdminBook): Promis
     price: /^\d{1,8}$/.test(text('price')) ? price : 0,
     description,
     image,
-    sort: Number.isInteger(sort) ? sort : 0,
+    sort,
     active: form.get('active') === '0' ? 0 : 1,
     author: fields.author,
     weight: fields.weight,

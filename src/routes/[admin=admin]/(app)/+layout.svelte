@@ -6,13 +6,13 @@
   const links = $derived([
     ['narudzbine', 'Наруџбине'],
     ['knjige', 'Књиге'],
+    ['slajder', 'Слајдер'],
     ['cenovnik', 'Ценовник'],
     ['obavestenja', 'Обавештења'],
   ])
 </script>
 
 <header class="bar">
-  <strong>Књига Крајина</strong>
   <nav>
     {#each links as [slug, label]}
       <a href="{data.base}/{slug}/" class:on={page.url.pathname.startsWith(`${data.base}/${slug}/`)}>

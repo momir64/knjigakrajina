@@ -39,8 +39,6 @@ export interface Slide {
   html: string
   image: string
   k: number
-  yA: number
-  yB: number
   /** author box height (px), gap to the description (px), title line-height and font-size */
   ah: number
   ag: number

@@ -166,6 +166,14 @@
     width: auto;
     min-width: 180px;
   }
+  .visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
   .hint {
     display: block;
     margin-top: 3px;
@@ -337,42 +345,129 @@
     margin-top: 16px;
   }
 
-  // book form
+  // book form: header with the actions, a side column (cover, sale) and the main cards
   .book-form {
+    display: grid;
+    grid-template-columns: 250px minmax(0, 1fr);
+    gap: 18px 22px;
+    align-items: start;
+    margin-bottom: 18px;
+    @media (max-width: 860px) {
+      grid-template-columns: 1fr;
+    }
     select {
       width: 100%;
     }
-    display: grid;
-    gap: 14px 18px;
-    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-    margin-bottom: 18px;
-    .wide {
+    .editor-head {
       grid-column: 1 / -1;
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 10px 20px;
+      h1 {
+        flex: 1 1 260px;
+        min-width: 0;
+        margin: 0;
+        overflow-wrap: anywhere;
+      }
     }
-    .frow {
-      grid-column: 1 / -1;
+    .side,
+    .main {
       display: grid;
-      gap: 14px 18px;
+      gap: 18px;
+      min-width: 0;
+    }
+    .side {
+      @media (min-width: 861px) {
+        position: sticky;
+        top: 16px;
+      }
+    }
+    .card {
+      background: #fff;
+      border: 1px solid $border-soft;
+      border-radius: 8px;
+      padding: 16px 18px 18px;
+      margin: 0;
+      min-width: 0;
+      h2 {
+        margin: 0 0 12px;
+        padding-bottom: 8px;
+        border-bottom: 1px solid $border-soft;
+      }
+    }
+    .stack {
+      display: grid;
+      gap: 14px;
+    }
+    .fgrid {
+      display: grid;
+      gap: 14px 16px;
       grid-template-columns: repeat(var(--n), minmax(0, 1fr));
       @media (max-width: 1000px) {
-        grid-template-columns: repeat(3, minmax(0, 1fr));
-      }
-      @media (max-width: 760px) {
         grid-template-columns: repeat(2, minmax(0, 1fr));
       }
       @media (max-width: 480px) {
         grid-template-columns: 1fr;
       }
     }
-    .check {
+    .cover .art {
+      display: grid;
+      place-items: center;
+      min-height: 200px;
+      margin-bottom: 12px;
+      padding: 12px;
+      background: $header-bg;
+      border-radius: 6px;
+      img {
+        display: block;
+        max-width: 100%;
+        max-height: 320px;
+        height: auto;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.18);
+      }
+    }
+    .tags {
+      margin: 10px 0 0;
+      padding-left: 18px;
+    }
+    .help {
+      margin-top: 12px;
+      summary {
+        cursor: pointer;
+        font-size: 14px;
+        color: $notice;
+      }
+      .hint {
+        margin-top: 8px;
+      }
+      .tags {
+        padding-left: 18px;
+        li {
+          margin: 3px 0;
+        }
+      }
+    }
+    .actions {
       display: flex;
       align-items: center;
-      gap: 8px;
-      align-self: end;
-      padding-bottom: 10px;
-      input {
-        width: 18px;
-        height: 18px;
+      gap: 10px;
+      margin-left: auto;
+    }
+    .btn,
+    .btn-outline {
+      padding: 9px 18px;
+      line-height: 1.3;
+      font-size: 15px;
+    }
+    .btn-outline {
+      padding: 8px 17px; // the 1px border makes up the difference
+      &.danger {
+        color: #8b2a22;
+        border-color: #8b2a22;
+        &:hover {
+          background: rgba(#8b2a22, 0.08);
+        }
       }
     }
   }
@@ -390,45 +485,6 @@
       width: 65%;
       margin: 30px auto 0;
       text-align: center;
-    }
-  }
-}
-
-// book editor: the cover row holds the cover, the file picker and, top right, Сачувај / Преглед / Обриши
-.adm .book-form .cover {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: flex-start;
-  gap: 14px 22px;
-  img {
-    width: 190px;
-    height: auto;
-    border: 1px solid $border-soft;
-  }
-  .pick {
-    flex: 1 1 220px;
-    min-width: 0;
-  }
-  .actions {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    margin-left: auto;
-  }
-  .btn,
-  .btn-outline {
-    padding: 9px 18px;
-    line-height: 1.3;
-    font-size: 15px;
-  }
-  .btn-outline {
-    padding: 8px 17px; // the 1px border makes up the difference
-    &.danger {
-      color: #8b2a22;
-      border-color: #8b2a22;
-      &:hover {
-        background: rgba(#8b2a22, 0.08);
-      }
     }
   }
 }
@@ -616,6 +672,38 @@
   .page-head .nudge-down {
     position: relative;
     top: 8px;
+  }
+  // slider list + form
+  .slides {
+    .slide-thumb img {
+      width: 96px;
+      height: 64px;
+      object-fit: contain;
+      background: $header-bg;
+    }
+    .blurb {
+      color: $bubble;
+      font-size: 14px;
+      max-width: 420px;
+    }
+    td {
+      vertical-align: middle;
+    }
+  }
+  .order-btns {
+    display: grid;
+    gap: 4px;
+    margin: 0;
+  }
+  .icon-btn.small {
+    width: 28px;
+    height: 28px;
+    background: #fff;
+    cursor: pointer;
+    &:disabled {
+      opacity: 0.3;
+      cursor: not-allowed;
+    }
   }
   .narrow-page {
     max-width: 640px;
