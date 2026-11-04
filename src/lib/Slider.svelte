@@ -59,7 +59,7 @@
           <a class="slide-btn" href="/knjige/{s.slug}/" tabindex={i === index ? 0 : -1}>Више о књизи</a>
         </div>
         <a class="slide-img" href="/knjige/{s.slug}/" tabindex="-1" draggable="false" style="--k:{s.k}">
-          <img src={s.image} alt={s.title} draggable="false" />
+          <img src={s.image} alt={s.title} draggable="false" fetchpriority={i === 0 ? 'high' : undefined} />
         </a>
       </article>
     {/each}

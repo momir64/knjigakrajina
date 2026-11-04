@@ -6,14 +6,14 @@ export default defineConfig({
   plugins: [
     sveltekit({
       adapter: adapter(),
-      // Scripts only from this origin (SvelteKit adds hashes for its own inline bootstrap script). Styles and fonts
-      // come from Google Fonts; inline styles are used by components and the e-mail-free pages alike.
+      // Scripts only from this origin (SvelteKit adds hashes for its own inline bootstrap script). Fonts are self-hosted
+      // (src/fonts); inline styles are used by components.
       csp: {
         directives: {
           'default-src': ['self'],
           'script-src': ['self'],
-          'style-src': ['self', 'unsafe-inline', 'https://fonts.googleapis.com'],
-          'font-src': ['self', 'https://fonts.gstatic.com', 'data:'],
+          'style-src': ['self', 'unsafe-inline'],
+          'font-src': ['self', 'data:'],
           'img-src': ['self', 'data:'],
           'connect-src': ['self'],
           'object-src': ['none'],

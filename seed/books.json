@@ -31,7 +31,7 @@
   "binding": "Тврд",
   "script": "Ћирилица",
   "year": "2019",
-  "sort": 10
+  "sort": 20
  },
  {
   "slug": "oj-malena-mala-moja",
@@ -48,7 +48,7 @@
   "binding": "Тврд",
   "script": "Ћирилица",
   "year": "2021",
-  "sort": 20
+  "sort": 50
  },
  {
   "slug": "ispod-pepela",
@@ -65,7 +65,7 @@
   "binding": "Тврд",
   "script": "Ћирилица",
   "year": "2018",
-  "sort": 30
+  "sort": 160
  },
  {
   "slug": "bilo-jednom-na-baniji",
@@ -82,7 +82,7 @@
   "binding": "Меки",
   "script": "Ћирилица",
   "year": "2022",
-  "sort": 40
+  "sort": 30
  },
  {
   "slug": "kad-cikne-zvono",
@@ -99,7 +99,7 @@
   "binding": "Тврд",
   "script": "Ћирилица",
   "year": "2023",
-  "sort": 50
+  "sort": 60
  },
  {
   "slug": "san-o-nestajanju",
@@ -116,7 +116,7 @@
   "binding": "Тврд",
   "script": "Ћирилица",
   "year": "2021",
-  "sort": 60
+  "sort": 80
  },
  {
   "slug": "kuridza",
@@ -133,7 +133,7 @@
   "binding": "Тврд",
   "script": "Ћирилица",
   "year": "2021",
-  "sort": 70
+  "sort": 90
  },
  {
   "slug": "antologija-srpske-narodne-poezije",
@@ -150,7 +150,7 @@
   "binding": "Тврд",
   "script": "Ћирилица",
   "year": "2020",
-  "sort": 80
+  "sort": 40
  },
  {
   "slug": "djavo-na-papuku",
@@ -167,7 +167,7 @@
   "binding": "Тврд",
   "script": "Ћирилица",
   "year": "2024",
-  "sort": 90
+  "sort": 10
  },
  {
   "slug": "pjesme",
@@ -218,7 +218,7 @@
   "binding": "Тврд",
   "script": "Ћирилица",
   "year": "2021",
-  "sort": 120
+  "sort": 70
  },
  {
   "slug": "poslednji-smokvin-list",
@@ -286,6 +286,6 @@
   "binding": "Тврд",
   "script": "Ћирилица",
   "year": "2020",
-  "sort": 160
+  "sort": 120
  }
 ]

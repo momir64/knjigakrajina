@@ -45,7 +45,7 @@ export const DEFAULT_SLIDES: SlideConfig[] = [
   {
     id: 'djavo',
     slug: 'djavo-na-papuku',
-    image: 'slide-djavo.png',
+    image: 'slide-djavo.webp',
     active: true,
     k: 1,
     ah: 55.2,
