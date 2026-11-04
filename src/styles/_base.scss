@@ -1,28 +1,6 @@
 @use 'sass:color';
 @use 'vars' as *;
 
-@font-face {
-  font-family: 'eicons';
-  src: url('/fonts/eicons.woff2') format('woff2');
-  font-weight: 400;
-  font-style: normal;
-  font-display: block;
-}
-
-.eicon {
-  display: inline-block;
-  font-family: 'eicons';
-  font-style: normal;
-  font-weight: 400;
-  line-height: 1;
-  text-rendering: auto;
-  -webkit-font-smoothing: antialiased;
-
-  &.eicon-cart::before {
-    content: '\e8ea';
-  }
-}
-
 *,
 *::before,
 *::after {

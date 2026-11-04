@@ -4,12 +4,21 @@
 
   let { slides }: { slides: Slide[] } = $props()
   let index = $state(0)
+  // only the first slide's picture is fetched with the page; the others follow once it has finished loading (or on the first click)
+  let more = $state(false)
   let paused = false
   let startX: number | null = null
 
-  const go = (n: number) => (index = (n + slides.length) % slides.length)
+  const go = (n: number) => {
+    more = true
+    index = (n + slides.length) % slides.length
+  }
 
   onMount(() => {
+    const loaded = () => (more = true)
+    if (document.readyState === 'complete') loaded()
+    else addEventListener('load', loaded, { once: true })
+
     const t = slides.length > 1 ? setInterval(() => !paused && go(index + 1), 7200) : undefined
 
     // left / right arrow keys switch slides (ignored while typing in a field)
@@ -26,6 +35,7 @@
 
     return () => {
       clearInterval(t)
+      removeEventListener('load', loaded)
       removeEventListener('keydown', onKey)
     }
   })
@@ -59,7 +69,7 @@
           <a class="slide-btn" href="/knjige/{s.slug}/" tabindex={i === index ? 0 : -1}>Више о књизи</a>
         </div>
         <a class="slide-img" href="/knjige/{s.slug}/" tabindex="-1" draggable="false" style="--k:{s.k}">
-          <img src={s.image} alt={s.title} draggable="false" fetchpriority={i === 0 ? 'high' : undefined} />
+          <img src={i === 0 || more ? s.image : undefined} alt={s.title} draggable="false" fetchpriority={i === 0 ? 'high' : undefined} />
         </a>
       </article>
     {/each}

@@ -244,6 +244,7 @@ $arrow-zone: 85px;
       align-self: center;
       margin: 10px auto 10px;
       width: min(calc((40.4cqw - 171px) * 0.85), 800px);
+      height: auto; // the width/height attributes only reserve the space
     }
     &:last-child img {
       margin-top: 20px;
@@ -276,6 +277,7 @@ $arrow-zone: 85px;
     @include mobile {
       img {
         width: calc((100% - 100px) * 0.85);
+        height: auto;
       }
       h3 {
         font-size: 8cqw;
