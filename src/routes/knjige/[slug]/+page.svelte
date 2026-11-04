@@ -40,7 +40,8 @@
 
 <Seo
   title="{book.title} | Књига Крајина"
-  description="{plainText(book.description, 110)} – {latinTitle(book.title)}, {toLatin(book.author)}"
+  description={plainText(book.description, 95)}
+  latin="{latinTitle(book.title)}, {toLatin(book.author)}"
   path="/knjige/{book.slug}/"
   image={bookImage(book.image)}
   type="book"

@@ -10,8 +10,9 @@
 </script>
 
 <Seo
-  title="Књига Крајина | Припрема за штампу, лектура и коректурa"
-  description="Књиге о Крајишким Србима и услуге припреме за штампу, лектуре и коректуре – Knjige o Krajišnicima, priprema za štampu, lektura i korektura. Snježana Stanišić, Novi Sad."
+  title="Књига Крајина | Припрема за штампу, лектура и коректура"
+  description="Књиге о Крајишким Србима, припрема за штампу, лектура и коректура. Сњежана Станишић, Нови Сад."
+  latin="Knjige o Krajišnicima, priprema za štampu, lektura i korektura."
   path="/"
   image={data.slides[0]?.image}
 />

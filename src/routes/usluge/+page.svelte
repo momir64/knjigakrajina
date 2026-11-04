@@ -7,7 +7,8 @@
 
 <Seo
   title="ЦЕНОВНИК | Припрема за штампу, лектура и коректура"
-  description="Ценовник услуга лектуре, коректуре и техничке обраде текста (прелом) – Cenovnik usluga lekture, korekture i tehničke obrade teksta (prelom)."
+  description="Ценовник услуга лектуре, коректуре и прелома текста."
+  latin="Cenovnik usluga lekture, korekture i preloma teksta."
   path="/usluge/"
 />
 

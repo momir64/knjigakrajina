@@ -4,7 +4,8 @@
 
 <Seo
   title="КОНТАКТ | Сњежана Станишић"
-  description="Контакт: Сњежана Станишић, лектор, коректор и преламач из Новог Сада – Kontakt: Snježana Stanišić, lektor, korektor i prelamač, Novi Sad."
+  description="Контакт: Сњежана Станишић, лектор, коректор и преламач, Нови Сад."
+  latin="Kontakt: Snježana Stanišić, lektor, korektor i prelamač, Novi Sad."
   path="/kontakt/"
   image="/images/kontakt.webp"
 />
@@ -15,7 +16,7 @@
     <p>
       <strong>Сњежана Станишић, Нови Сад</strong><br />
       Е-mail: <a href="mailto:snjezana.stanisic.ns@gmail.com">snjezana.stanisic.ns@gmail.com</a><br />
-      Tелефон: 064/297-3929
+      Телефон: 064/297-3929
     </p>
     <p>
       Сњежана Станишић је професор руског језика и књижевности. Више од двадесет година бави се издавачком

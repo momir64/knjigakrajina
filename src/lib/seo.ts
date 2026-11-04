@@ -7,9 +7,12 @@ export function plainText(html = '', max = 160): string {
     .replace(/&amp;/g, '&')
     .replace(/&#?\w+;/g, ' ')
     .replace(/\s+/g, ' ')
+    .replace(/\s+([,.;:!?…])/g, '$1')
     .trim()
   if (text.length <= max) return text
   const cut = text.slice(0, max - 1)
+  const stop = Math.max(cut.lastIndexOf('. '), cut.lastIndexOf('! '), cut.lastIndexOf('? '))
+  if (stop > max * 0.6) return cut.slice(0, stop + 1)
   const at = cut.lastIndexOf(' ')
   return cut.slice(0, at > 60 ? at : cut.length).replace(/[\s,;:.„“"]+$/, '') + '…'
 }

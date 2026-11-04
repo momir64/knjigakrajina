@@ -11,13 +11,15 @@
   interface Props {
     title?: string
     description?: string
+    /** the same description in Latin letters; added to the search-result description only, never to social previews */
+    latin?: string
     path?: string
     image?: string
     type?: string
     noindex?: boolean
     jsonLd?: Record<string, unknown> | Record<string, unknown>[]
   }
-  let { title, description, path, image, type = 'website', noindex = false, jsonLd }: Props = $props()
+  let { title, description, latin, path, image, type = 'website', noindex = false, jsonLd }: Props = $props()
 
   const origin = $derived(page.data.origin ?? '')
   const url = $derived(origin + (path ?? page.url.pathname))
@@ -48,7 +50,7 @@
 <svelte:head>
   {#if title}
     <title>{title}</title>
-    {#if description}<meta name="description" content={description} />{/if}
+    {#if description}<meta name="description" content={latin ? `${description}${/[.!?]$/.test(description) ? ' ' : ' – '}${latin}` : description} />{/if}
     {#if noindex}
       <meta name="robots" content="noindex, nofollow" />
     {:else}
