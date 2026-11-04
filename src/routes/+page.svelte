@@ -11,7 +11,7 @@
 
 <Seo
   title="Књига Крајина | Припрема за штампу, лектура и коректурa"
-  description="Књиге о Крајишким Србима и услуге припреме за штампу, лектуре и коректуре Сњежане Станишић из Новог Сада."
+  description="Књиге о Крајишким Србима и услуге припреме за штампу, лектуре и коректуре – Knjige o Krajišnicima, priprema za štampu, lektura i korektura. Snježana Stanišić, Novi Sad."
   path="/"
   image={data.slides[0]?.image}
 />

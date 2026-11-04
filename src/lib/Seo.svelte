@@ -4,6 +4,7 @@
   import { sliderImage } from './media'
 
   const SITE = 'Књига Крајина'
+  const SITE_LATIN = 'Knjiga Krajina' // search metadata only, for people who type it in Latin letters
   const DEFAULT_IMAGE = sliderImage('slide-becarac.webp')
 
   // Rendered by the root layout without props (site-wide data) and by every page with its own.
@@ -27,11 +28,12 @@
     script({
       '@context': 'https://schema.org',
       '@graph': [
-        { '@type': 'WebSite', '@id': origin + '/#website', url: origin + '/', name: SITE, inLanguage: 'sr-Cyrl-RS' },
+        { '@type': 'WebSite', '@id': origin + '/#website', url: origin + '/', name: SITE, alternateName: SITE_LATIN, inLanguage: 'sr-Cyrl-RS' },
         {
           '@type': 'Organization',
           '@id': origin + '/#org',
           name: SITE,
+          alternateName: SITE_LATIN,
           url: origin + '/',
           logo: origin + '/logo.svg',
           email: 'snjezana.stanisic.ns@gmail.com',

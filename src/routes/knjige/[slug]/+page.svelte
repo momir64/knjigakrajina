@@ -4,6 +4,7 @@
   import Seo from '#lib/Seo.svelte'
   import { bookImage } from '#lib/media'
   import { plainText } from '#lib/seo.js'
+  import { latinTitle, toLatin } from '#lib/translit'
 
   import type { PageData } from './$types'
 
@@ -39,7 +40,7 @@
 
 <Seo
   title="{book.title} | Књига Крајина"
-  description={plainText(book.description, 200)}
+  description="{plainText(book.description, 110)} – {latinTitle(book.title)}, {toLatin(book.author)}"
   path="/knjige/{book.slug}/"
   image={bookImage(book.image)}
   type="book"
@@ -48,10 +49,11 @@
     '@type': ['Product', 'Book'],
     '@id': '/knjige/' + book.slug + '/#product',
     name: book.title,
+    alternateName: latinTitle(book.title),
     sku: book.slug,
     brand: { '@type': 'Brand', name: 'Књига Крајина' },
     publisher: { '@id': '/#org' },
-    author: { '@type': 'Person', name: book.author },
+    author: { '@type': 'Person', name: book.author, alternateName: toLatin(book.author) },
     description: plainText(book.description, 500),
     image: bookImage(book.image),
     url: '/knjige/' + book.slug + '/',

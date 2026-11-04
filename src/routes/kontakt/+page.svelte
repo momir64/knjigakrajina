@@ -4,7 +4,7 @@
 
 <Seo
   title="КОНТАКТ | Сњежана Станишић"
-  description="Контакт и препоруке за сарадњу: Сњежана Станишић, професор руског језика и књижевности, лектор, коректор и преламач из Новог Сада."
+  description="Контакт: Сњежана Станишић, лектор, коректор и преламач из Новог Сада – Kontakt: Snježana Stanišić, lektor, korektor i prelamač, Novi Sad."
   path="/kontakt/"
   image="/images/kontakt.webp"
 />

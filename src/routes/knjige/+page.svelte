@@ -22,7 +22,7 @@
 
 <Seo
   title="КЊИГЕ | Књига Крајина"
-  description="Књиге у издању Књиге Крајине: бећарац Срба у западној Славонији, баштина крајишких Срба, антологије крајишких балада и народне поезије."
+  description="Књиге у издању Књиге Крајине: бећарац Срба у западној Славонији, баштина крајишких Срба, антологије – Knjige: Bećarac Srba u zapadnoj Slavoniji, Baština krajiških Srba, antologije."
   path="/knjige/"
   image={books[0] && bookImage(books[0].image)}
 />
