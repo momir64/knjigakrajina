@@ -1334,13 +1334,13 @@ $card-shadow: 0 8px 18px rgba(0, 1, 35, 0.05);
       gap: 54px;
     }
     @include mobile {
-      grid-template-columns: 1fr;
+      grid-template-columns: minmax(0, 1fr);
       gap: 0;
     }
   }
   .form-grid {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
     column-gap: 36px;
 
     @include tablet {
@@ -1352,8 +1352,14 @@ $card-shadow: 0 8px 18px rgba(0, 1, 35, 0.05);
   }
   .form-row {
     margin: 0 3px 16px;
+    min-width: 0;
     display: flex;
     flex-direction: column;
+
+    // phones: fields line up with the headings, the table and the button (no extra 3px inset)
+    @include mobile {
+      margin-inline: 0;
+    }
 
     &.wide {
       grid-column: 1 / -1;
@@ -1436,6 +1442,16 @@ $card-shadow: 0 8px 18px rgba(0, 1, 35, 0.05);
     }
     th:last-child {
       white-space: nowrap;
+    }
+    // very small phones: tighter cells and wrapping options, so the table never pushes the page wider than the screen
+    @media (max-width: 360px) {
+      th,
+      td {
+        padding-inline: 10px;
+      }
+      .methods li {
+        white-space: normal;
+      }
     }
     thead th:last-child {
       text-align: right;
