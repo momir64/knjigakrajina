@@ -1455,14 +1455,17 @@ $card-shadow: 0 8px 18px rgba(0, 1, 35, 0.05);
     th:last-child {
       white-space: nowrap;
     }
-    // very small phones: tighter cells and wrapping options, so the table never pushes the page wider than the screen
+    // narrow columns (tablet and phone): the shipping options may wrap, so the table never grows wider than its box
+    @include tablet {
+      .methods li {
+        white-space: normal;
+      }
+    }
+    // very small phones: tighter cells too
     @media (max-width: 360px) {
       th,
       td {
         padding-inline: 10px;
-      }
-      .methods li {
-        white-space: normal;
       }
     }
     thead th:last-child {
