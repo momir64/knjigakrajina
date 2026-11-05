@@ -583,15 +583,18 @@ $arrow-zone: 85px;
     .product-price {
       font-size: 20px;
       line-height: 24px;
-      padding-top: 37px;
-      margin-bottom: 47px;
+      padding-top: 24px;
+      margin-bottom: 26px;
     }
     .add-form {
-      gap: 15px;
-      justify-content: flex-start;
+      gap: 12px;
+      justify-content: stretch;
 
+      // the button takes what the quantity box leaves, so nothing overflows on small phones
       .btn-main {
-        flex-basis: 180px;
+        flex: 1 1 0;
+        min-width: 0;
+        padding-inline: 8px;
       }
     }
   }
@@ -628,7 +631,8 @@ $arrow-zone: 85px;
     }
   }
   @include mobile {
-    gap: 40px;
+    gap: 32px;
+    margin-top: 40px;
 
     .product-desc,
     .product-attrs {
@@ -653,8 +657,10 @@ $arrow-zone: 85px;
   }
 
   @include mobile {
-    font-size: 14px;
-    line-height: 21px;
+    font-size: 15px;
+    line-height: 23px;
+    text-align: left; // justified text leaves wide gaps in narrow columns
+    overflow-wrap: anywhere;
   }
 }
 
@@ -695,24 +701,29 @@ $arrow-zone: 85px;
     padding: 0 0 0 20px;
   }
 
-  // on phones the original stacks each label above its value
+  // on phones: label and value side by side, in rows
   @include mobile {
     display: block;
 
-    tbody,
-    tr,
-    th,
-    td {
+    tbody {
       display: block;
-      width: 100%;
+    }
+    tr {
+      display: grid;
+      grid-template-columns: minmax(96px, 38%) minmax(0, 1fr);
     }
     th,
     td {
-      padding-top: 5px;
-      padding-bottom: 5px;
+      width: auto;
+      padding: 9px 12px;
+      border-top: 0;
+      overflow-wrap: anywhere;
     }
     th {
-      padding-inline: 8px;
+      text-align: left;
+    }
+    td {
+      border-left: 0;
     }
   }
 }
@@ -1003,11 +1014,6 @@ $card-shadow: 0 8px 18px rgba(0, 1, 35, 0.05);
   }
 }
 
-.cart-scroll {
-  @include mobile {
-    overflow-x: auto;
-  }
-}
 
 .cart-table {
   width: 100%;
@@ -1023,9 +1029,9 @@ $card-shadow: 0 8px 18px rgba(0, 1, 35, 0.05);
   .c-rm { width: 56px; }
   .c-img { width: 130px; }
   .c-name { width: auto; }
-  .c-price { width: 16%; }
-  .c-qty { width: 11%; }
-  .c-total { width: 16%; }
+  .c-price { width: 140px; }
+  .c-qty { width: 150px; } // the − 1 + control plus some air around it; a percentage squeezed it into its neighbours
+  .c-total { width: 140px; }
 
   th {
     text-align: center;
@@ -1071,6 +1077,11 @@ $card-shadow: 0 8px 18px rgba(0, 1, 35, 0.05);
       padding-inline: 8px;
       white-space: nowrap;
     }
+    // an unusually large amount may wrap onto a second line rather than run into its neighbour
+    &:nth-child(4),
+    &:nth-child(6) {
+      white-space: normal;
+    }
   }
   .thumb {
     text-align: left;
@@ -1095,7 +1106,7 @@ $card-shadow: 0 8px 18px rgba(0, 1, 35, 0.05);
 
     button {
       flex: 0 0 auto;
-      padding: 10px 8px;
+      padding: 10px 12px;
       font: 400 20px $sys;
       color: #97a0b6;
     }
@@ -1120,24 +1131,103 @@ $card-shadow: 0 8px 18px rgba(0, 1, 35, 0.05);
     .c-rm { width: 48px; }
     .c-img { width: 130px; }
     .c-name { width: auto; }
-    .c-price { width: 18%; }
-    .c-qty { width: 13%; }
-    .c-total { width: 18%; }
-  }
-  @include mobile {
-    width: 718px;
+    .c-price { width: 126px; }
+    .c-qty { width: 126px; }
+    .c-total { width: 126px; }
 
-    .c-rm { width: 48px; }
-    .c-img { width: 130px; }
-    .c-name { width: 200px; }
-    .c-price { width: 120px; }
-    .c-qty { width: 100px; }
-    .c-total { width: 120px; }
+    td:nth-child(n + 4) {
+      font-size: 17px;
+    }
+  }
+  // tablets and phones: every book is a card (picture left; title, price, quantity and total beside it)
+  @include tablet {
+    display: block;
+    width: 100%;
+    font-size: 17px;
+
+    colgroup,
+    thead {
+      display: none;
+    }
+    tbody {
+      display: block;
+    }
+    tr {
+      position: relative;
+      display: grid;
+      grid-template-columns: 84px minmax(0, 1fr) auto;
+      grid-template-areas:
+        'thumb name  name'
+        'thumb price price'
+        'thumb qty   total';
+      align-items: center;
+      gap: 4px 14px;
+      margin-bottom: 13px;
+      padding: 12px;
+      background: #fff;
+      border-radius: 5px;
+    }
+    td:nth-child(n) {
+      display: block;
+      padding: 0;
+      border-radius: 0;
+      background: none;
+      text-align: left;
+      white-space: normal;
+      font-weight: 400;
+    }
+    td.thumb {
+      grid-area: thumb;
+      align-self: start;
+      img {
+        width: 84px;
+        height: 84px;
+      }
+    }
+    td:nth-child(3) {
+      grid-area: name;
+      padding-right: 34px; // room for the remove button
+      font-size: 16px;
+      line-height: 22px;
+      font-weight: 500;
+      overflow-wrap: anywhere;
+    }
+    td:nth-child(4) {
+      grid-area: price;
+      font-size: 15px;
+    }
+    td:nth-child(5) {
+      grid-area: qty;
+      margin-left: -8px;
+    }
+    td:nth-child(6) {
+      grid-area: total;
+      justify-self: end;
+      font-weight: 600;
+      white-space: nowrap;
+    }
+    td.rm {
+      position: absolute;
+      top: 6px;
+      right: 6px;
+      padding: 0;
+    }
+    .qty {
+      margin: 0;
+      justify-content: flex-start;
+      height: 44px;
+
+      button {
+        padding-inline: 12px;
+      }
+    }
   }
 }
 
 .cart-totals {
+  // fixed width, right aligned; it only shrinks (to the full width) when the screen is narrower than that
   width: 400px;
+  max-width: 100%;
   margin: 0 0 139px auto;
   font-family: $sys;
 
@@ -1181,16 +1271,24 @@ $card-shadow: 0 8px 18px rgba(0, 1, 35, 0.05);
     align-items: flex-end;
   }
 
-  @include tablet {
+  // from 680px down it stretches edge to edge
+  @media (max-width: 680px) {
     width: 100%;
-
-    th {
-      width: 288px;
-    }
   }
   @include mobile {
+    margin-bottom: 60px;
     th {
-      width: 142px;
+      width: 38%;
+    }
+    td {
+      padding-right: 14px;
+    }
+    .methods {
+      align-items: flex-end;
+      font-size: 16px;
+      label {
+        white-space: nowrap;
+      }
     }
   }
 }
