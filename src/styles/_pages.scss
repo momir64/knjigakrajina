@@ -1356,11 +1356,6 @@ $card-shadow: 0 8px 18px rgba(0, 1, 35, 0.05);
     display: flex;
     flex-direction: column;
 
-    // phones: fields line up with the headings, the table and the button (no extra 3px inset)
-    @include mobile {
-      margin-inline: 0;
-    }
-
     &.wide {
       grid-column: 1 / -1;
     }
@@ -1408,6 +1403,18 @@ $card-shadow: 0 8px 18px rgba(0, 1, 35, 0.05);
       font-size: 13px;
       margin-top: 4px;
     }
+
+    // phones: fields line up with the headings, the table and the button (no extra 3px inset) and tighter vertical spacing
+    @include mobile {
+      margin: 0 0 10px;
+
+      &:nth-child(-n + 2) {
+        margin-bottom: 10px;
+      }
+      label {
+        line-height: 26px;
+      }
+    }
   }
   .ship-toggle {
     font-size: 18px;
@@ -1419,6 +1426,11 @@ $card-shadow: 0 8px 18px rgba(0, 1, 35, 0.05);
   }
 
   .order-review {
+    @include mobile {
+      h3 {
+        margin-top: 14px;
+      }
+    }
     table {
       width: 100%;
       border-collapse: collapse;
