@@ -12,5 +12,5 @@ export async function placeOrder(payload: OrderPayload): Promise<{ ok: boolean; 
 
 // 1000 -> "1.000,00 РСД"
 export function money(n: number): string {
-  return n.toLocaleString('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' РСД'
+  return n.toLocaleString('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' РСД'
 }

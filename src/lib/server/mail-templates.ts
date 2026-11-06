@@ -29,7 +29,7 @@ const SERIF = "Georgia, 'Times New Roman', serif"
 const esc = (s: string | null | undefined) =>
   (s ?? '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#x27;')
 
-export const money = (n: number) => `${n.toLocaleString('de-DE')},00 РСД`
+export const money = (n: number) => `${n.toLocaleString('de-DE')},00 РСД`
 
 const SHOP = { name: 'Књига Крајина', owner: 'Сњежана Станишић, Нови Сад', phone: '064/297-3929', email: 'snjezana.stanisic.ns@gmail.com' }
 

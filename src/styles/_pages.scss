@@ -1037,7 +1037,7 @@ $card-shadow: 0 8px 18px rgba(0, 1, 35, 0.05);
   .c-name { width: auto; }
   .c-price { width: 140px; }
   .c-qty { width: 150px; } // the − 1 + control plus some air around it; a percentage squeezed it into its neighbours
-  .c-total { width: 140px; }
+  .c-total { width: 156px; } // 16px wider than the price column: the extra room is the air after the last amount
 
   th {
     text-align: center;
@@ -1050,6 +1050,10 @@ $card-shadow: 0 8px 18px rgba(0, 1, 35, 0.05);
     &.th-book {
       text-align: center;
       padding: 0 10px 0 0;
+    }
+    // same extra room as the amounts below, so the heading stays centred over them
+    &:last-child {
+      padding-right: 16px;
     }
   }
   td {
@@ -1087,6 +1091,9 @@ $card-shadow: 0 8px 18px rgba(0, 1, 35, 0.05);
     &:nth-child(4),
     &:nth-child(6) {
       white-space: normal;
+    }
+    &:nth-child(6) {
+      padding-right: 24px;
     }
   }
   .thumb {
@@ -1209,6 +1216,7 @@ $card-shadow: 0 8px 18px rgba(0, 1, 35, 0.05);
     td:nth-child(6) {
       grid-area: total;
       justify-self: end;
+      padding-right: 6px; // a little more air to the card edge
       font-weight: 600;
       white-space: nowrap;
     }
