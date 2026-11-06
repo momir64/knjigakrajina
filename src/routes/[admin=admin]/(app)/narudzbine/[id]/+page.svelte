@@ -25,7 +25,7 @@
       <a href="tel:{o.phone}">{o.phone}</a>
     </p>
     <p>{o.address}<br />{o.postcode} {o.city}{#if o.state}, {o.state}{/if}<br />{o.country}</p>
-    <p class="muted">{SHIPPING_LABELS[o.shipping_method] ?? o.shipping_method} · плаћање поузећем</p>
+    <p>{SHIPPING_LABELS[o.shipping_method] ?? o.shipping_method} · плаћање поузећем</p>
   </section>
 
   <section class="card">
