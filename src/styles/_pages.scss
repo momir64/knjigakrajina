@@ -217,7 +217,7 @@ $arrow-zone: 85px;
     padding-bottom: 145px;
   }
   @include mobile {
-    padding-bottom: 134px;
+    padding-bottom: 64px;
   }
 
   .services-grid {
@@ -318,6 +318,7 @@ $arrow-zone: 85px;
     width: calc(100% - 20px);
     grid-template-columns: 1fr;
     gap: 19px;
+    margin-bottom: 48px;
   }
 }
 
@@ -408,6 +409,7 @@ $arrow-zone: 85px;
   @include mobile {
     width: calc(100% - 40px);
     margin-top: 40px;
+    margin-bottom: 56px;
   }
 }
 
@@ -947,6 +949,10 @@ ul.notes {
   width: min(88.4%, 977px);
   margin: 100px auto 129px;
 
+  @include mobile {
+    margin-bottom: 64px;
+  }
+
   .rec-title {
     margin-inline: 0;
     width: auto;
@@ -1276,7 +1282,7 @@ $card-shadow: 0 8px 18px rgba(0, 1, 35, 0.05);
     width: 100%;
   }
   @include mobile {
-    margin-bottom: 60px;
+    margin-bottom: 30px;
     th {
       width: 38%;
     }
@@ -1307,11 +1313,13 @@ $card-shadow: 0 8px 18px rgba(0, 1, 35, 0.05);
   padding: 18px 0 60px;
   margin-inline: auto;
 
-  @include tablet {
-    width: 81.5%;
+  // below 1050px the side margins shrink with the screen (40px at most, 20px on phones), which keeps the fields in two columns for longer
+  @media (max-width: 1050px) {
+    width: auto;
+    margin-inline: clamp(20px, 5vw, 40px);
   }
   @include mobile {
-    width: calc(100% - 20px);
+    padding-bottom: 32px;
   }
 
   h3 {
@@ -1329,6 +1337,9 @@ $card-shadow: 0 8px 18px rgba(0, 1, 35, 0.05);
     align-items: start;
     margin: 0 10px;
 
+    @media (max-width: 1050px) {
+      margin-inline: 0;
+    }
     @include tablet {
       grid-template-columns: 249fr 317fr;
       gap: 54px;
@@ -1338,20 +1349,54 @@ $card-shadow: 0 8px 18px rgba(0, 1, 35, 0.05);
       gap: 0;
     }
   }
+  // the column that holds the fields decides how many fit in a row, whatever the screen width
+  .checkout-fields {
+    container-type: inline-size;
+  }
+  .field-group {
+    h4 {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin: 0 0 20px;
+      font: 600 13px/1 $font-main;
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
+      color: #2c2a26;
+
+      &::after {
+        content: '';
+        flex: 1;
+        height: 1px;
+        background: $border-soft;
+      }
+    }
+    & + .field-group {
+      margin-top: 6px;
+
+      @include tablet {
+        margin-top: 12px;
+      }
+      @include mobile {
+        margin-top: 20px;
+      }
+    }
+  }
   .form-grid {
     display: grid;
     grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-    column-gap: 36px;
+    column-gap: 16px;
 
     @include tablet {
-      column-gap: 15px;
+      column-gap: 12px;
     }
     @include mobile {
-      column-gap: 19px;
+      column-gap: 12px;
     }
   }
+  // outlined fields: the label sits inside the box and moves onto the top border when the field is focused or has a value
   .form-row {
-    margin: 0 3px 16px;
+    margin: 0 3px 22px; // matches the side by side gap (16px + 2 × 3px)
     min-width: 0;
     display: flex;
     flex-direction: column;
@@ -1359,61 +1404,123 @@ $card-shadow: 0 8px 18px rgba(0, 1, 35, 0.05);
     &.wide {
       grid-column: 1 / -1;
     }
-    &:nth-child(-n + 2) {
-      margin-bottom: 6px;
+
+    .field {
+      position: relative;
+      display: block;
+    }
+    input,
+    select {
+      display: block;
+      width: 100%;
+      box-sizing: border-box;
+      height: 50px;
+      padding: 0 14px;
+      font: 400 16px $font-main;
+      color: $dark;
+      background: #fff;
+      border: 1px solid #d6cfc3;
+      border-radius: 6px;
+      transition: border-color 0.15s, box-shadow 0.15s;
+
+      &:hover {
+        border-color: #b9b0a2;
+      }
+      &:focus {
+        outline: none;
+        border-color: $accent-dark;
+        box-shadow: 0 0 0 1px $accent-dark;
+      }
     }
     label {
-      font: 500 16px/32px $font-main;
+      position: absolute;
+      left: 10px;
+      top: 25px;
+      max-width: calc(100% - 20px);
+      padding: 0 5px;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      transform: translateY(-50%);
+      font: 400 16px/1.2 $font-main;
       color: #787878;
+      pointer-events: none;
+      transition: top 0.15s, font-size 0.15s, color 0.15s;
+    }
+    // floated: focused, filled in (also by the browser's autofill), or a select, which always shows a value
+    input:focus + label,
+    input:not(:placeholder-shown) + label,
+    input:-webkit-autofill + label,
+    select + label {
+      top: 0;
+      font-size: 12px;
+      background: linear-gradient(to bottom, $bg 50%, #fff 50%);
+    }
+    input:focus + label,
+    input:not(:placeholder-shown) + label,
+    input:-webkit-autofill + label,
+    select + label {
+      color: #2c2a26; // same as the group headings, not the border colour
     }
     abbr {
+      margin-left: 2px; // close to the last letter
       color: #b81c23;
       text-decoration: none;
     }
     .opt {
       font-weight: 400;
     }
-    input,
-    select,
-    textarea {
-      font: 400 14px $font-main;
-      height: 41px;
-      padding: 0 12px;
-      border: 0.8px solid $field-border;
-      border-radius: 5px;
-      background: #fff;
-      color: $dark;
-      width: 100%;
-
-      &:focus {
-        outline: 2px solid rgba($accent, 0.5);
-        border-color: $accent;
-      }
-    }
-    textarea {
-      height: auto;
-      padding: 10px 12px;
-    }
     &.invalid input,
     &.invalid select {
       border-color: #b81c23;
+      &:focus {
+        box-shadow: 0 0 0 1px #b81c23;
+      }
+    }
+    &.invalid input + label,
+    &.invalid select + label {
+      color: #b81c23;
+    }
+    &.invalid {
+      margin-bottom: 12px; // the message already fills the gap below the field
     }
     .err {
       color: #b81c23;
       font-size: 13px;
-      margin-top: 4px;
+      line-height: 1.4;
+      margin: 3px 0 0 14px;
     }
 
-    // phones: fields line up with the headings, the table and the button (no extra 3px inset) and tighter vertical spacing
+    // phones: fields line up with the headings, the table and the button (no extra 3px inset)
+    @include tablet {
+      margin: 0 0 14px; // fields line up with the headings here (one per row)
+    }
     @include mobile {
-      margin: 0 0 10px;
-
-      &:nth-child(-n + 2) {
-        margin-bottom: 10px;
-      }
+      margin: 0 0 12px;
+    }
+    // very small phones: a slightly smaller resting label so "Поштански број" still fits next to "Град"
+    @media (max-width: 360px) {
       label {
-        line-height: 26px;
+        left: 6px;
+        padding: 0 3px;
+        font-size: 13px;
       }
+      input,
+      select {
+        padding-inline: 12px;
+      }
+    }
+  }
+  // one field per row only when it is really needed: the form column is narrower than 340px (beside the order summary on
+  // tablets) or the screen is a phone
+  @container (max-width: 339px) {
+    .form-row {
+      grid-column: 1 / -1;
+    }
+  }
+  @media (max-width: 480px) {
+    .form-row {
+      grid-column: 1 / -1;
     }
   }
   .ship-toggle {

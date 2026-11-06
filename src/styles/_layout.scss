@@ -185,6 +185,10 @@
   padding: 54px 0 76px;
   text-align: center;
 
+  @include mobile {
+    padding: 30px 0 36px;
+  }
+
   p {
     margin: 0;
     padding: 0 10px;
@@ -196,7 +200,7 @@
 
     @include mobile {
       font-size: min(16px, max(12px, 3.4cqw));
-      line-height: 2.6em;
+      line-height: 2.1em;
     }
   }
 }

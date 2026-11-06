@@ -9,7 +9,7 @@
     </span>
     <a class="notice-btn" href="/korpa/">Преглед корпе</a>
     <span class="notice-text">
-      {#if notice.qty > 1}{notice.qty} × „{notice.title}“ су додата у вашу корпу.{:else}„{notice.title}“ је додата у вашу корпу.{/if}
+      {#if notice.qty > 1}{notice.qty} × „{notice.title}“ књига су додате у вашу корпу.{:else}„{notice.title}“ књига је додата у вашу корпу.{/if}
     </span>
   </div>
 {/if}

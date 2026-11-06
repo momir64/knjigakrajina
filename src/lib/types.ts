@@ -70,4 +70,5 @@ export interface OrderPayload extends Address {
 export interface OrderResult {
   total?: number
   errors?: Record<string, string>
+  error?: string
 }

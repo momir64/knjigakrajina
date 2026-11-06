@@ -1,4 +1,5 @@
-// All e-mail texts and the shared look (colors and type follow the site: cream header, gold accent, dark footer).
+// All e-mail texts and the shared look, matching the site: warm off-white page (like the back office), white card with a
+// soft border and shadow (like the "Ваша наруџбина" box), cream header, gold accent, dark footer.
 // Mail clients are picky: table layout, inline styles, no web fonts, no images (SVG is not supported by Gmail).
 import type { OrderItem, OrderRow } from './db'
 
@@ -8,7 +9,20 @@ export interface Mail {
   text: string
 }
 
-const COLORS = { page: '#f8f0e0', card: '#fffdf8', text: '#333333', dark: '#212120', accent: '#bc9d77', muted: '#776a59', line: '#f0e8dd', footer: '#37342d', notice: '#4f3933' }
+const COLORS = {
+  page: '#fffdf8', // behind the card
+  card: '#ffffff',
+  header: '#f8f0e0',
+  panel: '#fffdf8', // quiet boxes inside the card
+  text: '#333333',
+  dark: '#212120',
+  accent: '#bc9d77',
+  muted: '#2c2a26', // secondary text: between the footer (#37342d) and the headings (#212120)
+  line: '#f0e8dd',
+  border: '#e8e8e8',
+  footer: '#37342d',
+  notice: '#4f3933',
+}
 const SANS = "Raleway, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif"
 const SERIF = "Georgia, 'Times New Roman', serif"
 
@@ -35,8 +49,8 @@ function layout(o: { preheader: string; title: string; body: string }): string {
 <body style="margin:0;padding:0;background:${COLORS.page};">
 <div style="display:none;max-height:0;overflow:hidden;opacity:0;color:${COLORS.page};">${esc(o.preheader)}</div>
 <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:${COLORS.page};"><tr><td align="center" style="padding:28px 12px;">
-  <table role="presentation" width="600" cellpadding="0" cellspacing="0" style="width:100%;max-width:600px;background:${COLORS.card};border-radius:6px;overflow:hidden;">
-    <tr><td align="center" style="background:${COLORS.page};padding:30px 24px 22px;border-bottom:3px solid ${COLORS.accent};">
+  <table role="presentation" width="600" cellpadding="0" cellspacing="0" style="width:100%;max-width:600px;background:${COLORS.card};border:1px solid ${COLORS.border};border-radius:6px;box-shadow:0 8px 18px rgba(0,1,35,0.07);overflow:hidden;">
+    <tr><td align="center" style="background:${COLORS.header};padding:30px 24px 22px;border-bottom:3px solid ${COLORS.accent};">
       <div style="font-family:${SERIF};font-size:30px;line-height:34px;color:${COLORS.dark};">Књига Крајина</div>
       <div style="font-family:${SANS};font-size:12px;letter-spacing:2px;text-transform:uppercase;color:${COLORS.muted};padding-top:6px;">Књиге · Лектура · Припрема за штампу</div>
     </td></tr>
@@ -53,10 +67,10 @@ function layout(o: { preheader: string; title: string; body: string }): string {
 
 const h1 = (s: string) => `<h1 style="margin:0 0 14px;font-family:${SANS};font-size:24px;line-height:30px;font-weight:600;color:${COLORS.dark};">${s}</h1>`
 const p = (s: string) => `<p style="margin:0 0 16px;">${s}</p>`
-const h2 = (s: string) => `<div style="margin:26px 0 8px;font-family:${SANS};font-size:12px;letter-spacing:2px;text-transform:uppercase;font-weight:600;color:${COLORS.muted};">${s}</div>`
+const h2 = (s: string) => `<div style="margin:26px 0 8px;font-family:${SANS};font-size:13px;letter-spacing:0.8px;text-transform:uppercase;font-weight:700;color:${COLORS.muted};">${s}</div>`
 
 const box = (inner: string) =>
-  `<table role="presentation" width="100%" cellpadding="0" cellspacing="0"><tr><td style="background:${COLORS.page};border-left:3px solid ${COLORS.accent};padding:14px 18px;font-size:15px;line-height:24px;color:${COLORS.text};">${inner}</td></tr></table>`
+  `<table role="presentation" width="100%" cellpadding="0" cellspacing="0"><tr><td style="background:${COLORS.panel};border:1px solid ${COLORS.line};border-left:3px solid ${COLORS.accent};border-radius:4px;padding:14px 18px;font-size:15px;line-height:24px;color:${COLORS.text};">${inner}</td></tr></table>`
 
 function itemsTable(items: OrderItem[], total: number): string {
   const rows = items
@@ -78,11 +92,10 @@ const itemsText = (items: OrderItem[], total: number) =>
 const html = (lines: string[]) => lines.map(esc).join('<br>')
 
 const detailsBlock = (o: OrderRow) =>
-  h2('Испорука') + box(`${html(addressLines(o))}<br><span style="color:${COLORS.muted};">${esc(shippingLabel(o))} · плаћање поузећем</span>`)
+  h2('Испорука') + box(`${html(addressLines(o))}<br>${esc(shippingLabel(o))} · плаћање поузећем`)
 
 // shop notice: who ordered and where it goes, in one box
 function buyerBlock(o: OrderRow): string {
-  const muted = (s: string) => `<span style="color:${COLORS.muted};">${s}</span>`
   const own = html([o.address, `${o.postcode} ${o.city}`, o.country])
   const lines = [
     `<b>${esc(o.first_name + ' ' + o.last_name)}</b>`,
@@ -90,7 +103,7 @@ function buyerBlock(o: OrderRow): string {
     esc(o.phone),
     own,
   ]
-  lines.push('', muted(`${esc(shippingLabel(o))} · плаћање поузећем`))
+  lines.push('', `${esc(shippingLabel(o))} · плаћање поузећем`)
   return box(lines.join('<br>'))
 }
 
@@ -120,7 +133,7 @@ export function newOrderNotice(o: OrderRow, items: OrderItem[]): Mail {
   const ref = orderRef(o)
   const who = `${o.first_name} ${o.last_name}`
   const body =
-    h1(`Нова наруџбина <span style="color:${COLORS.accent};">${esc(ref)}</span>`) +
+    h1(`Нова наруџбина <span style="color:${COLORS.muted};">${esc(ref)}</span>`) +
     p(`${esc(who)} је управо послао/ла наруџбину на вебсајту.`) +
     h2('Наручено') + itemsTable(items, o.total) +
     h2('Купац и испорука') + buyerBlock(o) +
