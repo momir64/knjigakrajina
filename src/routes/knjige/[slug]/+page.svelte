@@ -5,6 +5,7 @@
   import { bookImage } from '#lib/media'
   import { plainText } from '#lib/seo.js'
   import { latinTitle, toLatin } from '#lib/translit'
+  import searchIcon from '../../../images/emoji-search.svg'
 
   import type { PageData } from './$types'
 
@@ -89,7 +90,7 @@
    <div class="product-top">
     <div class="product-gallery">
       <button class="zoom" aria-label="Увећај" onclick={() => (zoom = true)}>
-        <img src="/emoji-search.svg" alt="" draggable="false" />
+        <img src={searchIcon} alt="" draggable="false" />
       </button>
       <img src={bookImage(book.image)} alt={book.title} />
     </div>

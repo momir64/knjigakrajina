@@ -85,13 +85,16 @@ setup (`PROTOCOL_HEADER`, `ADDRESS_HEADER`, `HOST`, `BODY_SIZE_LIMIT`).
 ## Project layout
 
 ```
-src/routes         pages, the order API, uploads route, sitemap, robots, admin panel
-src/lib            shared components, cart store, SEO helpers
-src/lib/server     database, auth, mailer, mail templates, storage, rate limiting
-src/lib/backoffice admin panel components
-src/styles         SCSS
-static/            logo, icons, fonts, page images
-uploads/           covers and slider art, written at runtime
-seed/              initial catalogue
-scripts/           admin password helper, demo orders
+src/routes          pages, the order API, uploads route, sitemap, robots, admin panel
+src/hooks.server.ts access control for the admin area, security headers
+src/lib             shared components, cart store, SEO helpers, sanitizer
+src/lib/server      database, auth, mailer, mail templates, storage, rate limiting
+src/lib/backoffice  admin panel components
+src/styles          SCSS
+src/fonts           self-hosted web fonts
+src/images          page images and icons, imported in code and served with hashed file names
+static/             logo and icons at fixed addresses
+uploads/            covers and slider art, written at runtime
+seed/               initial catalogue
+scripts/            admin password helper, demo orders
 ```

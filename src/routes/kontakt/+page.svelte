@@ -1,5 +1,6 @@
 <script lang="ts">
   import Seo from '#lib/Seo.svelte'
+  import kontakt from '../../images/kontakt.webp'
 </script>
 
 <Seo
@@ -7,11 +8,11 @@
   description="Контакт: Сњежана Станишић, лектор, коректор и преламач, Нови Сад."
   latin="Kontakt: Snježana Stanišić, lektor, korektor i prelamač, Novi Sad."
   path="/kontakt/"
-  image="/images/kontakt.webp"
+  image={kontakt}
 />
 
 <section class="contact">
-  <img src="/images/kontakt.webp" width="720" height="480" alt="Илустрација која осликава момка и девојку окружени књигама и списатељским мотивима." />
+  <img src={kontakt} width="720" height="480" alt="Илустрација која осликава момка и девојку окружени књигама и списатељским мотивима." />
   <div class="contact-text">
     <p>
       <strong>Сњежана Станишић, Нови Сад</strong><br />
