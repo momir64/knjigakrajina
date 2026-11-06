@@ -45,8 +45,14 @@ function addressLines(o: OrderRow): string[] {
 
 function layout(o: { preheader: string; title: string; body: string }): string {
   return `<!doctype html>
-<html lang="sr-RS"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${esc(o.title)}</title></head>
+<html lang="sr-RS"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="format-detection" content="telephone=no,address=no,email=no,date=no"><title>${esc(o.title)}</title>
+<style>
+  /* mail apps turn street addresses, phones and dates into blue underlined links on their own: keep them as plain text. Links we wrote carry an inline colour, which wins over these rules */
+  a[x-apple-data-detectors] { color: inherit !important; text-decoration: none !important; font-size: inherit !important; font-family: inherit !important; font-weight: inherit !important; line-height: inherit !important; }
+  u + .mail a { color: inherit; text-decoration: none; }
+</style></head>
 <body style="margin:0;padding:0;background:${COLORS.page};">
+<u></u><div class="mail">
 <div style="display:none;max-height:0;overflow:hidden;opacity:0;color:${COLORS.page};">${esc(o.preheader)}</div>
 <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:${COLORS.page};"><tr><td align="center" style="padding:28px 12px;">
   <table role="presentation" width="600" cellpadding="0" cellspacing="0" style="width:100%;max-width:600px;background:${COLORS.card};border:1px solid ${COLORS.border};border-radius:6px;box-shadow:0 8px 18px rgba(0,1,35,0.07);overflow:hidden;">
@@ -62,6 +68,7 @@ function layout(o: { preheader: string; title: string; body: string }): string {
     </td></tr>
   </table>
 </td></tr></table>
+</div>
 </body></html>`
 }
 
