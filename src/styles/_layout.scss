@@ -70,7 +70,7 @@
   justify-content: center;
   width: 70px;
   height: 46px;
-  color: rgba(33, 33, 32, 0.753);
+  color: $text; // same as the nav links
   font-size: 20px;
 
   @include mobile {
