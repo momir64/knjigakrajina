@@ -72,7 +72,7 @@ export async function readBookForm(form: FormData, existing?: AdminBook): Promis
       }
     }
   } else if (!existing) {
-    errors.image = 'Додајте корицу.'
+    errors.image = 'Додајте корице.'
   }
 
   const values: BookInput = {

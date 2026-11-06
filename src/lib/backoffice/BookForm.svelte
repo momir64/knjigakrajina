@@ -62,12 +62,12 @@
 
   <aside class="side">
     <section class="card cover">
-      <h2>Корица</h2>
+      <h2>Корице</h2>
       <div class="art">
-        {#if cover}<img src={cover} alt="Корица" />{:else}<span class="muted">Нема корице</span>{/if}
+        {#if cover}<img src={cover} alt="Корице" />{:else}<span class="muted">Нема корица</span>{/if}
       </div>
       <label class="pick">
-        {v.image || preview ? 'Замени корицу' : 'Одабери корицу'}
+        {v.image || preview ? 'Замени корице' : 'Одабери корице'}
         <input type="file" name="image" accept="image/webp,image/png,image/jpeg,image/gif,image/avif" onchange={pick} />
         {#if errors.image}<span class="msg err">{errors.image}</span>{/if}
         <span class="hint">WebP, PNG, JPEG, GIF или AVIF, највише 20 MB.</span>
