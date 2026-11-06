@@ -2,7 +2,7 @@
 
 export const ORDER_STATUSES = {
   new: 'Нова',
-  shipped: 'Послата',
+  shipped: 'Послата / Спремна за преузимање',
   done: 'Завршена',
   canceled: 'Отказана',
 } as const

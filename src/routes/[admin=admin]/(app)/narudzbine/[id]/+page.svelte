@@ -39,7 +39,7 @@
       <button class="btn" type="submit">Сачувај</button>
     </form>
     <label class="check-line">
-      <input type="checkbox" name="notify" form="status-form" checked /> Обавести купца е-поштом (за статусе Послата и Отказана)
+      <input type="checkbox" name="notify" form="status-form" /> Обавести купца е-поштом
     </label>
     {#if form?.saved}
       <p class="msg ok">Сачувано.{#if form.mail === 'sent'} Купцу је послата порука.{/if}</p>
