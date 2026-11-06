@@ -1419,6 +1419,7 @@ $card-shadow: 0 8px 18px rgba(0, 1, 35, 0.05);
       font: 400 16px $font-main;
       color: $dark;
       background: #fff;
+      background-clip: padding-box; // the white must not reach under the curved border, or it shows as light specks in the corners
       border: 1px solid #d6cfc3;
       border-radius: 6px;
       transition: border-color 0.15s, box-shadow 0.15s;
@@ -1429,7 +1430,8 @@ $card-shadow: 0 8px 18px rgba(0, 1, 35, 0.05);
       &:focus {
         outline: none;
         border-color: $accent-dark;
-        box-shadow: 0 0 0 1px $accent-dark;
+        border-width: 2px; // one real border, thicker, instead of a second ring that has to match the curve
+        padding-inline: 13px; // keeps the text where it was
       }
     }
     label {
@@ -1442,7 +1444,7 @@ $card-shadow: 0 8px 18px rgba(0, 1, 35, 0.05);
       white-space: nowrap;
       text-overflow: ellipsis;
       transform: translateY(-50%);
-      font: 400 16px/1.2 $font-main;
+      font: 400 16px/18px $font-main;
       color: #787878;
       pointer-events: none;
       transition: top 0.15s, font-size 0.15s, color 0.15s;
@@ -1474,7 +1476,8 @@ $card-shadow: 0 8px 18px rgba(0, 1, 35, 0.05);
     &.invalid select {
       border-color: #b81c23;
       &:focus {
-        box-shadow: 0 0 0 1px #b81c23;
+        border-width: 2px;
+        padding-inline: 13px;
       }
     }
     &.invalid input + label,
@@ -1508,6 +1511,10 @@ $card-shadow: 0 8px 18px rgba(0, 1, 35, 0.05);
       input,
       select {
         padding-inline: 12px;
+      }
+      input:focus,
+      select:focus {
+        padding-inline: 11px;
       }
     }
   }

@@ -34,15 +34,32 @@
   const EMAIL_RE = /^[^@\s<>,;"']+@[^@\s<>,;"']+\.[^@\s<>,;"']+$/
   const MAX_LEN: Record<string, number> = { email: 254, address: 200 }
 
+  function problem(key: string): string {
+    const v = String((billing as Record<string, string>)[key] ?? '').trim()
+    if (!v) return 'required'
+    if (v.length > (MAX_LEN[key] ?? 100)) return 'too long'
+    if (key === 'email' && !EMAIL_RE.test(v)) return 'invalid'
+    return ''
+  }
+
   function validate(): Record<string, string> {
     const found: Record<string, string> = {}
     for (const key of Object.keys(REQUIRED)) {
-      const v = String((billing as Record<string, string>)[key] ?? '').trim()
-      if (!v) found['billing_' + key] = 'required'
-      else if (v.length > (MAX_LEN[key] ?? 100)) found['billing_' + key] = 'too long'
-      else if (key === 'email' && !EMAIL_RE.test(v)) found['billing_' + key] = 'invalid'
+      const kind = problem(key)
+      if (kind) found['billing_' + key] = kind
     }
     return found
+  }
+
+  // once an error is showing, keep it in step with what is typed: it goes away when the field is fixed and changes if the problem changes
+  function recheck(name: string) {
+    if (!errors[name]) return
+    const kind = problem(name.replace('billing_', ''))
+    const next = { ...errors }
+    if (kind) next[name] = kind
+    else delete next[name]
+    errors = next
+    summary = describe(next)
   }
 
   // field names as they read inside a sentence: име, улица и кућни број
@@ -136,7 +153,7 @@
       {:else if key === 'country'}
         <select id={name} bind:value={obj[key]}><option>Србија</option></select>
       {:else}
-        <input id={name} type={opts.type ?? 'text'} bind:value={obj[key]} placeholder=" " />
+        <input id={name} type={opts.type ?? 'text'} bind:value={obj[key]} placeholder=" " oninput={() => recheck(name)} />
       {/if}
       <label for={name}>{label}{#if !opts.optional}<abbr title="обавезно">*</abbr>{:else}&nbsp;<span class="opt">(опционо)</span>{/if}</label>
     </span>
