@@ -126,12 +126,11 @@ export function orderConfirmation(o: OrderRow, items: OrderItem[]): Mail {
     p(`Поштовани/а ${esc(o.first_name)}, примили смо вашу наруџбину.${pickup ? ' Јавићемо вам се када књиге буду спремне за преузимање.' : ' Књиге ћемо упаковати и послати што је пре могуће. Плаћање се врши приликом преузимања пошиљке од курира.'}`) +
     h2('Наручено') + itemsTable(items, o.total) +
     detailsBlock(o) +
-    (o.note ? h2('Ваша напомена') + box(esc(o.note).replace(/\n/g, '<br>')) : '') +
     `<div style="height:22px"></div>` + contact() + p('Срдачан поздрав,<br>Сњежана Станишић')
   return {
     subject: 'Књига Крајина – потврда наруџбине',
     html: layout({ preheader: 'Хвала на наруџбини – ево прегледа ваших књига.', title: 'Потврда наруџбине', body }),
-    text: `Поштовани/а ${o.first_name}, хвала на наруџбини.\n\n${itemsText(items, o.total)}\n\nИспорука: ${shippingLabel(o)}, плаћање поузећем\n${addressLines(o).join('\n')}\n${o.note ? `\nНапомена: ${o.note}\n` : ''}\n${SHOP.owner}, ${SHOP.phone}`,
+    text: `Поштовани/а ${o.first_name}, хвала на наруџбини.\n\n${itemsText(items, o.total)}\n\nИспорука: ${shippingLabel(o)}, плаћање поузећем\n${addressLines(o).join('\n')}\n\n${SHOP.owner}, ${SHOP.phone}`,
   }
 }
 
@@ -144,12 +143,11 @@ export function newOrderNotice(o: OrderRow, items: OrderItem[]): Mail {
     p(`${esc(who)} је управо послао/ла наруџбину на вебсајту.`) +
     h2('Наручено') + itemsTable(items, o.total) +
     h2('Купац и испорука') + buyerBlock(o) +
-    h2('Напомена купца') + box(o.note ? esc(o.note).replace(/\n/g, '<br>') : '<span style="color:' + COLORS.muted + ';">–</span>') +
     `<p style="margin:26px 0 0;font-size:12px;color:${COLORS.muted};">ID: ${esc(o.id)}<br>Одговор на ову поруку иде купцу.</p>`
   return {
     subject: `Нова наруџбина ${ref}`,
     html: layout({ preheader: `${who} – ${money(o.total)}`, title: `Нова наруџбина ${ref}`, body }),
-    text: `Нова наруџбина ${ref}\n${who}, ${o.email}, ${o.phone}\n\n${itemsText(items, o.total)}\n\nИспорука: ${shippingLabel(o)}\n${addressLines(o).join('\n')}\n\nНапомена: ${o.note || '-'}\nID: ${o.id}`,
+    text: `Нова наруџбина ${ref}\n${who}, ${o.email}, ${o.phone}\n\n${itemsText(items, o.total)}\n\nИспорука: ${shippingLabel(o)}\n${addressLines(o).join('\n')}\nID: ${o.id}`,
   }
 }
 
@@ -176,8 +174,8 @@ export function statusUpdate(o: OrderRow, items: OrderItem[], status: NotifiedSt
   const c = copy[status]
   const body =
     h1(c.title) + p(`Поштовани/а ${esc(o.first_name)},`) + p(c.text) +
-    (status === 'canceled' ? '' : h2('Наруџбина') + itemsTable(items, o.total) + detailsBlock(o)) +
-    `<div style="height:22px"></div>` + contact() + p('Срдачан поздрав,<br>Сњежана Станишић')
+    (status === 'canceled' ? '' : h2('Наруџбина') + itemsTable(items, o.total) + detailsBlock(o) + `<div style="height:22px"></div>`) +
+    contact() + p('Срдачан поздрав,<br>Сњежана Станишић')
   return {
     subject: c.subject,
     html: layout({ preheader: c.text, title: c.title, body }),
