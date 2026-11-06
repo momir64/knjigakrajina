@@ -68,8 +68,9 @@ export function clear() {
 export const notice = $state({ title: '', qty: 0, open: false })
 
 export function showNotice(book: Pick<Book, 'title'>, qty = 1) {
+  // adding the same book again while the bar is still open adds up; another book starts the count over
+  notice.qty = notice.open && notice.title === book.title ? notice.qty + qty : qty
   notice.title = book.title
-  notice.qty = qty
   notice.open = true
 }
 

@@ -1,5 +1,14 @@
 <script lang="ts">
-  import { notice } from './cart.svelte.js'
+  import { hideNotice, notice } from './cart.svelte.js'
+
+  // Serbian number agreement: 1, 21, 31 ... one book; 2-4, 22-24 ... books (plural verb); 5-20, 25-30 ... "књига" with a neuter verb
+  function added(n: number): string {
+    const last = n % 10
+    const tail = n % 100
+    if (last === 1 && tail !== 11) return 'књига је додата'
+    if (last >= 2 && last <= 4 && (tail < 12 || tail > 14)) return 'књиге су додате'
+    return 'књига је додато'
+  }
 </script>
 
 {#if notice.open}
@@ -9,7 +18,10 @@
     </span>
     <a class="notice-btn" href="/korpa/">Преглед корпе</a>
     <span class="notice-text">
-      {#if notice.qty > 1}{notice.qty} × „{notice.title}“ књига су додате у вашу корпу.{:else}„{notice.title}“ књига је додата у вашу корпу.{/if}
+      {#if notice.qty > 1}{notice.qty} × „{notice.title}“ {added(notice.qty)} у вашу корпу.{:else}„{notice.title}“ књига је додата у вашу корпу.{/if}
     </span>
+    <button class="notice-close" type="button" aria-label="Затвори" onclick={hideNotice}>
+      <svg viewBox="0 0 24 24" width="16" height="16" fill="none" aria-hidden="true"><path d="M5 5l14 14M19 5L5 19" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" /></svg>
+    </button>
   </div>
 {/if}

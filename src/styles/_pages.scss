@@ -971,20 +971,16 @@ ul.notes {
 }
 
 // ---- Cart / checkout -----------------------------------------------------
+// message boxes (empty cart, order received, form errors): same colours as the added-to-cart bar (.notice)
 .woo-notice,
 .woo-success,
 .woo-error {
   font-family: $font-main;
-  border-top: 3px solid $accent;
-  background: #f6f5f8;
-  padding: 18px 24px;
-  margin: 0 0 24px;
-}
-.woo-success {
-  // same colours as the added-to-cart bar (.notice)
-  border-top-color: $notice;
+  border-top: 3px solid $notice-line;
   background: #f4f0ea;
-  color: #5d554b;
+  color: #3a332b;
+  padding: 16.5px 24px 18px; // the coloured line counts for half of its thickness
+  margin: 0 0 24px;
 }
 .woo-error {
   border-top-color: #b81c23;

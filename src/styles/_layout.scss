@@ -85,10 +85,13 @@
     height: 16px;
     padding: 0 4px;
     border-radius: 8px; // circle for one digit, pill when the number is wider
-    background: $bubble;
+    background: $cart-count;
     color: #fff;
-    font: 400 10px/15px $font-alt;
-    text-align: center;
+    // centred by the box itself instead of by a line height that Chrome and Firefox place slightly differently
+    display: grid;
+    place-items: center;
+    box-sizing: border-box;
+    font: 400 10px/1 $font-alt;
   }
 }
 
@@ -210,17 +213,18 @@
   display: flex;
   align-items: center;
   gap: 14px;
-  padding: 15px 30px 15px 24px;
-  border-top: 3px solid $notice;
+  // the 3px line on top counts for half: 1.5px less padding above than below pulls the content up by 0.75px
+  padding: 13.5px 30px 15px 24px;
+  border-top: 3px solid $notice-line;
   background: #f4f0ea;
-  color: #5d554b;
+  color: #3a332b;
   font-family: $sys;
   font-size: 16px;
   line-height: 1.5;
 
   .notice-icon {
     display: inline-flex;
-    color: $notice;
+    color: $notice-line;
     flex: 0 0 auto;
 
     svg {
@@ -230,26 +234,47 @@
   }
   .notice-btn {
     flex: 0 0 auto;
-    padding: 7px 16px;
+    padding: 6px 16px 8px; // the system font sits low in its line box, so the label is nudged up 1px
     border-radius: 3px;
-    background: #ebe5dc;
-    color: #5b5348;
+    background: #e3d7c4;
+    color: #3a332b;
     font-weight: 700;
     line-height: 1.4;
     white-space: nowrap;
 
     &:hover {
-      background: #e2dacd;
+      background: #d8c9b1;
     }
   }
   .notice-text {
     margin-left: auto;
     text-align: right;
+    padding-bottom: 2px; // same optical nudge as the button label
+  }
+  .notice-close {
+    flex: 0 0 auto;
+    display: inline-grid;
+    place-items: center;
+    width: 30px;
+    height: 30px;
+    margin: -4px -14px -4px 0;
+    padding: 0;
+    border: 0;
+    border-radius: 3px;
+    background: none;
+    color: #6b5d4d;
+    cursor: pointer;
+
+    &:hover {
+      background: #e3d7c4;
+      color: #3a332b;
+    }
   }
 
   @include tablet {
+    position: relative;
     flex-wrap: wrap;
-    padding: 12px 16px;
+    padding: 10.5px 44px 12px 16px;
     font-size: 14px;
 
     .notice-text {
@@ -257,5 +282,12 @@
       margin: 0;
       text-align: left;
     }
+    .notice-close {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      margin: 0;
+    }
   }
 }
+
