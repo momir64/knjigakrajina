@@ -67,6 +67,25 @@ CREATE TABLE IF NOT EXISTS admin_sessions (
     token_hash TEXT PRIMARY KEY,         -- SHA-256 of the cookie value
     expires_at INTEGER NOT NULL          -- ms since epoch
 );
+
+-- Anonymous page views for the back office statistics. No address, no cookie: "visitor" is a hash that changes every day.
+CREATE TABLE IF NOT EXISTS pageviews (
+    id INTEGER PRIMARY KEY,
+    ts INTEGER NOT NULL,                 -- seconds since epoch
+    day TEXT NOT NULL,                   -- YYYY-MM-DD in shop time (Europe/Belgrade)
+    hour INTEGER NOT NULL,               -- 0-23, shop time
+    dow INTEGER NOT NULL,                -- 0 = Monday
+    path TEXT NOT NULL,
+    visitor TEXT NOT NULL,
+    entry INTEGER NOT NULL DEFAULT 0,    -- 1 = the page was opened from outside, i.e. a visit starts here
+    src_type TEXT NOT NULL DEFAULT 'direct',
+    src_name TEXT NOT NULL DEFAULT '',
+    country TEXT NOT NULL DEFAULT '',    -- ISO 3166-1 alpha-2, from Cloudflare
+    city TEXT NOT NULL DEFAULT '',
+    device TEXT NOT NULL DEFAULT '',
+    browser TEXT NOT NULL DEFAULT ''
+);
+CREATE INDEX IF NOT EXISTS pageviews_day ON pageviews(day);
 `
 
 const BOOK_COLS = 'id, slug, title, author, price, description, image, weight, length, width, height, pages, binding, script, year, isbn'
@@ -141,6 +160,7 @@ function open(): DatabaseSync {
     db.exec("ALTER TABLE books ADD COLUMN isbn TEXT NOT NULL DEFAULT ''") // added after the first release
   }
   db.exec("UPDATE orders SET status='new' WHERE status='confirmed'") // the "confirmed" step was dropped
+  db.exec("DELETE FROM pageviews WHERE ts < CAST(strftime('%s','now') AS INTEGER) - 800 * 86400") // keep about two years
 
   const { n } = plain<{ n: number }>(db.prepare('SELECT COUNT(*) AS n FROM books').get())
   if (n === 0) seed(db)

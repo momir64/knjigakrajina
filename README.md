@@ -29,6 +29,8 @@ The endpoint is the only public write path, so it has a body size cap, field len
 **Email.** Messages are table-based HTML with inline styles, written with the quirks of Gmail, Outlook and Apple
 Mail, each with a plain-text alternative. All customer-supplied text is escaped.
 
+**Statistics.** The admin panel has an analytics page: visitors, visits and page views over time, a country map, traffic sources, busiest hours, top pages, devices and the path from cart to order. Counting is anonymous and cookieless: a small beacon posts the page path, the server stores no address, only a hash that changes every day, and country and city come from Cloudflare's location headers. Charts are plain SVG, so there is no charting dependency; the map outlines are generated from Natural Earth data by a dev-only script (`npm run build:map`). `npm run demo:traffic` fills a local database with sample traffic.
+
 **Admin panel.** The owner manages orders, books, covers, the home page slider, the price list and notification
 addresses. It is a separate area of the same app, with no links to it from the public site, no entry in the sitemap
 or robots file, and responses that are marked as non-indexable and non-cacheable.

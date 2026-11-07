@@ -9,18 +9,23 @@
     "start": "node --env-file-if-exists=.env build",
     "check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
     "admin:password": "node scripts/admin-password.mjs",
-    "demo:orders": "node scripts/demo-orders.mjs"
+    "demo:orders": "node scripts/demo-orders.mjs",
+    "demo:traffic": "node scripts/demo-traffic.mjs",
+    "build:map": "node scripts/build-map.mjs"
   },
   "devDependencies": {
     "@sveltejs/adapter-node": "^6.0.1",
     "@sveltejs/kit": "^3.1.1",
     "@sveltejs/vite-plugin-svelte": "^7.3.1",
     "@types/node": "^24.19.2",
+    "d3-geo": "^3.1.2",
     "sass": "^1.107.0",
     "svelte": "^5.57.3",
     "svelte-check": "^4.7.7",
+    "topojson-client": "^3.1.0",
     "typescript": "^6.0.3",
-    "vite": "^8.3.5"
+    "vite": "^8.3.5",
+    "world-atlas": "^2.0.2"
   },
   "dependencies": {
     "hyphen": "^1.14.1",
