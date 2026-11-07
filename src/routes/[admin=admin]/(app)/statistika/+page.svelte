@@ -80,7 +80,7 @@
       <a href="?range={r}" class:on={s.range === r}>{RANGE_LABELS[r]}</a>
     {/each}
   </p>
-  <p class="live" title="Посетиоци у последњих 5 минута"><i class:on={s.live > 0}></i>Сада на сајту: <b>{num(s.live)}</b></p>
+  <p class="live" title="Посетиоци у последњем минуту"><i class:on={s.live > 0}></i>Сада на сајту: <b>{num(s.live)}</b></p>
 </div>
 
 {#if s.total === 0}

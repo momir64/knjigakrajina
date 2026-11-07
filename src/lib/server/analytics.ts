@@ -268,7 +268,7 @@ export function overview(range: Range): Stats {
     range,
     from,
     to,
-    live: Number(one('SELECT COUNT(DISTINCT visitor) AS n FROM pageviews WHERE ts >= ?', Math.floor(Date.now() / 1000) - 300).n ?? 0),
+    live: Number(one('SELECT COUNT(DISTINCT visitor) AS n FROM pageviews WHERE ts >= ?', Math.floor(Date.now() / 1000) - 60).n ?? 0),
     visitors: { now: now.visitors, before: before.visitors },
     visits: { now: now.visits, before: before.visits },
     views: { now: now.views, before: before.views },
