@@ -45,7 +45,7 @@
     Слање порука преко Resend-а је {data.mailConfigured ? 'подешено' : 'искључено (RESEND_API_KEY није постављен, поруке се само исписују у дневник сервера)'}.
   </p>
   <form method="post" action="?/test" class="center-actions">
-    <button class="btn" type="submit">Пошаљи пробну поруку на сачуване адресе</button>
+    <button class="btn" type="submit">Пошаљи пробну поруку на адресе администратора</button>
   </form>
   {#if form?.test}<p class="msg {testResult[form.test][0]}">{testResult[form.test][1]}</p>{/if}
 </section>
