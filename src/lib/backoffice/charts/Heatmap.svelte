@@ -18,7 +18,8 @@
   const fill = (n: number) => (n === 0 ? '#f6f1e7' : `rgb(${mix([236, 222, 196], [79, 57, 51], Math.sqrt(n / max))})`)
   const num = (n: number) => n.toLocaleString('sr-RS')
   // scale labels, top to bottom: the colour runs on a square-root scale, so the value at a fraction t of the bar is max * t^2
-  const ticks = $derived([1, 0.75, 0.5, 0.25, 0].map((t) => Math.round(max * t * t)))
+  // (with few views several steps round to the same number, so each number is shown once)
+  const ticks = $derived([...new Set([1, 0.75, 0.5, 0.25, 0].map((t) => Math.round(max * t * t)))])
 </script>
 
 <div class="wrap">
