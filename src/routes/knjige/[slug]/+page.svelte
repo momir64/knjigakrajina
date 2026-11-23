@@ -68,6 +68,7 @@
       '@type': 'Offer',
       priceCurrency: 'RSD',
       price: book.price,
+      validFrom: new Date().toISOString().slice(0, 10),
       priceValidUntil: new Date(Date.now() + 365 * 864e5).toISOString().slice(0, 10),
       itemCondition: 'https://schema.org/NewCondition',
       availability: 'https://schema.org/InStock',
